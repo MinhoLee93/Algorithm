@@ -1,33 +1,13 @@
-/**
- * Definition for a binary tree node.
- * public class TreeNode {
- *     int val;
- *     TreeNode left;
- *     TreeNode right;
- *     TreeNode(int x) { val = x; }
- * }
- */
 class Solution {
-    static int result;
-    public int sumOfLeftLeaves(TreeNode root) {
-        result = 0;
-        solve(root);
-        return result;
+    public boolean isSubsequence(String s, String t) {
+        int n = s.length(), m = t.length();
+        
+        int j = 0;
+        for(int i = 0;j<n&&i<m;i++){
+            if(s.charAt(j)==t.charAt(i)){
+                j++;
+            }
+        }
+        return j==n;
     }
-    
-    public void solve(TreeNode n) {
-		if (n == null) {
-			return;
-		}
-
-		if (n.left != null) {
-			if (n.left.left == null && n.left.right == null) {
-				result += n.left.val;
-			} else {
-				solve(n.left);
-			}
-		}
-
-		solve(n.right);
-	}
 }
