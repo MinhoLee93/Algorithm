@@ -1,160 +1,161 @@
 package samsung;
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
 public class N {
-	// ¼¼·Î
-	static int N;
-	// °¡·Î
-	static int M;
-	// ¸í·É °¹¼ö
-	static int K;
-	static int[] dice = new int[6];
-	static int[] order;
-	static int[][] arr;
+    // ï¿½ï¿½ï¿½ï¿½
+    static int N;
+    // ï¿½ï¿½ï¿½ï¿½
+    static int M;
+    // ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+    static int K;
+    static int[] dice = new int[6];
+    static int[] order;
+    static int[][] arr;
 
-	public static void main(String[] args) throws Exception {
-		BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
-		StringTokenizer st;
+    public static void main(String[] args) throws Exception {
+        BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st;
 
-		st = new StringTokenizer(bf.readLine());
-		N = Integer.parseInt(st.nextToken());
-		M = Integer.parseInt(st.nextToken());
-		int x = Integer.parseInt(st.nextToken());
-		int y = Integer.parseInt(st.nextToken());
-		K = Integer.parseInt(st.nextToken());
+        st = new StringTokenizer(bf.readLine());
+        N = Integer.parseInt(st.nextToken());
+        M = Integer.parseInt(st.nextToken());
+        int x = Integer.parseInt(st.nextToken());
+        int y = Integer.parseInt(st.nextToken());
+        K = Integer.parseInt(st.nextToken());
 
-		arr = new int[N][M];
-		for (int i = 0; i < N; i++) {
-			st = new StringTokenizer(bf.readLine());
-			for (int j = 0; j < M; j++) {
-				arr[i][j] = Integer.parseInt(st.nextToken());
-			}
-		}
-
-		order = new int[K];
-		st = new StringTokenizer(bf.readLine());
-		for (int i = 0; i < K; i++) {
-			order[i] = Integer.parseInt(st.nextToken());
-		}
-
-		solve(x, y, 0, -1);
-		bf.close();
-	}
-
-	static void solve(int x, int y, int index, int flag) {
-		// System.out.println("x :" + x + " , y : " + y + " , index : " + index);
-
-		// Á¾·á
-		if (index >= K) {
-			return;
-		}
-
-		// ÀÌµ¿ÇÑ Ä­¿¡ ¾²¿©ÀÖ´Â ¼ö°¡ 0 ÀÌ¸é
-		if (flag == 1){
-            if(arr[x][y] == 0) {
-			arr[x][y] = dice[5];
-		    } else {
-			dice[5] = arr[x][y];
-			arr[x][y] = 0;
+        arr = new int[N][M];
+        for (int i = 0; i < N; i++) {
+            st = new StringTokenizer(bf.readLine());
+            for (int j = 0; j < M; j++) {
+                arr[i][j] = Integer.parseInt(st.nextToken());
             }
-		}
+        }
 
-		// ÀÌµ¿
-		switch (order[index]) {
-		case 1:
-			if (safe(x, y + 1)) {
-				dice = right(dice);
-				System.out.println(dice[0]);
-				solve(x, y + 1, index + 1, 1);
-			} else {
-				solve(x, y, index + 1, -1);
-			}
-			break;
-		case 2:
-			if (safe(x, y - 1)) {
-				dice = left(dice);
-				System.out.println(dice[0]);
-				solve(x, y - 1, index + 1, 1);
-			} else {
-				solve(x, y, index + 1, -1);
-			}
-			break;
-		case 3:
-			if (safe(x - 1, y)) {
-				dice = up(dice);
-				System.out.println(dice[0]);
-				solve(x - 1, y, index + 1, 1);
-			} else {
-				solve(x, y, index + 1, -1);
-			}
-			break;
-		case 4:
-			if (safe(x + 1, y)) {
-				dice = down(dice);
-				System.out.println(dice[0]);
-				solve(x + 1, y, index + 1, 1);
-			} else {
-				solve(x, y, index + 1, -1);
-			}
-			break;
-		}
-	}
+        order = new int[K];
+        st = new StringTokenizer(bf.readLine());
+        for (int i = 0; i < K; i++) {
+            order[i] = Integer.parseInt(st.nextToken());
+        }
 
-	static boolean safe(int x, int y) {
-		return (x >= 0) && (y >= 0) && (x < N) && (y < M);
-	}
+        solve(x, y, 0, -1);
+        bf.close();
+    }
 
-	static int[] right(int[] arr) {
-		int[] temp = new int[6];
+    static void solve(int x, int y, int index, int flag) {
+        // System.out.println("x :" + x + " , y : " + y + " , index : " + index);
 
-		temp[0] = arr[3];
-		temp[1] = arr[1];
-		temp[2] = arr[0];
-		temp[3] = arr[5];
-		temp[4] = arr[4];
-		temp[5] = arr[2];
+        // ï¿½ï¿½ï¿½ï¿½
+        if (index >= K) {
+            return;
+        }
 
-		return temp;
-	}
+        // ï¿½Ìµï¿½ï¿½ï¿½ Ä­ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ï¿½ 0 ï¿½Ì¸ï¿½
+        if (flag == 1) {
+            if (arr[x][y] == 0) {
+                arr[x][y] = dice[5];
+            } else {
+                dice[5] = arr[x][y];
+                arr[x][y] = 0;
+            }
+        }
 
-	static int[] left(int[] arr) {
-		int[] temp = new int[6];
+        // ï¿½Ìµï¿½
+        switch (order[index]) {
+            case 1:
+                if (safe(x, y + 1)) {
+                    dice = right(dice);
+                    System.out.println(dice[0]);
+                    solve(x, y + 1, index + 1, 1);
+                } else {
+                    solve(x, y, index + 1, -1);
+                }
+                break;
+            case 2:
+                if (safe(x, y - 1)) {
+                    dice = left(dice);
+                    System.out.println(dice[0]);
+                    solve(x, y - 1, index + 1, 1);
+                } else {
+                    solve(x, y, index + 1, -1);
+                }
+                break;
+            case 3:
+                if (safe(x - 1, y)) {
+                    dice = up(dice);
+                    System.out.println(dice[0]);
+                    solve(x - 1, y, index + 1, 1);
+                } else {
+                    solve(x, y, index + 1, -1);
+                }
+                break;
+            case 4:
+                if (safe(x + 1, y)) {
+                    dice = down(dice);
+                    System.out.println(dice[0]);
+                    solve(x + 1, y, index + 1, 1);
+                } else {
+                    solve(x, y, index + 1, -1);
+                }
+                break;
+        }
+    }
 
-		temp[0] = arr[2];
-		temp[1] = arr[1];
-		temp[2] = arr[5];
-		temp[3] = arr[0];
-		temp[4] = arr[4];
-		temp[5] = arr[3];
+    static boolean safe(int x, int y) {
+        return (x >= 0) && (y >= 0) && (x < N) && (y < M);
+    }
 
-		return temp;
-	}
+    static int[] right(int[] arr) {
+        int[] temp = new int[6];
 
-	static int[] up(int[] arr) {
-		int[] temp = new int[6];
+        temp[0] = arr[3];
+        temp[1] = arr[1];
+        temp[2] = arr[0];
+        temp[3] = arr[5];
+        temp[4] = arr[4];
+        temp[5] = arr[2];
 
-		temp[0] = arr[4];
-		temp[1] = arr[0];
-		temp[2] = arr[2];
-		temp[3] = arr[3];
-		temp[4] = arr[5];
-		temp[5] = arr[1];
+        return temp;
+    }
 
-		return temp;
-	}
+    static int[] left(int[] arr) {
+        int[] temp = new int[6];
 
-	static int[] down(int[] arr) {
-		int[] temp = new int[6];
+        temp[0] = arr[2];
+        temp[1] = arr[1];
+        temp[2] = arr[5];
+        temp[3] = arr[0];
+        temp[4] = arr[4];
+        temp[5] = arr[3];
 
-		temp[0] = arr[1];
-		temp[1] = arr[5];
-		temp[2] = arr[2];
-		temp[3] = arr[3];
-		temp[4] = arr[0];
-		temp[5] = arr[4];
+        return temp;
+    }
 
-		return temp;
-	}
+    static int[] up(int[] arr) {
+        int[] temp = new int[6];
+
+        temp[0] = arr[4];
+        temp[1] = arr[0];
+        temp[2] = arr[2];
+        temp[3] = arr[3];
+        temp[4] = arr[5];
+        temp[5] = arr[1];
+
+        return temp;
+    }
+
+    static int[] down(int[] arr) {
+        int[] temp = new int[6];
+
+        temp[0] = arr[1];
+        temp[1] = arr[5];
+        temp[2] = arr[2];
+        temp[3] = arr[3];
+        temp[4] = arr[0];
+        temp[5] = arr[4];
+
+        return temp;
+    }
 }

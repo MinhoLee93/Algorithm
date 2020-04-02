@@ -1,40 +1,40 @@
 class Solution {
     public String addBinary(String a, String b) {
-        
-	    int aIndex = a.length() - 1;
-		int bIndex = b.length() - 1;
 
-		int up = 0;
-		StringBuilder sb = new StringBuilder();
-		while (aIndex >= 0 || bIndex >= 0) {
-			int sum = 0;
+        int aIndex = a.length() - 1;
+        int bIndex = b.length() - 1;
 
-			if (aIndex >= 0) {
-				sum += (a.charAt(aIndex) - 48);
-				aIndex--;
-			}
+        int up = 0;
+        StringBuilder sb = new StringBuilder();
+        while (aIndex >= 0 || bIndex >= 0) {
+            int sum = 0;
 
-			if (bIndex >= 0) {
-				sum += (b.charAt(bIndex) - 48);
-				bIndex--;
-			}
+            if (aIndex >= 0) {
+                sum += (a.charAt(aIndex) - 48);
+                aIndex--;
+            }
 
-			sum += up;
+            if (bIndex >= 0) {
+                sum += (b.charAt(bIndex) - 48);
+                bIndex--;
+            }
 
-			if (sum > 1) {
-				up = 1;
-			} else {
-				up = 0;
-			}
+            sum += up;
 
-			sb.append(sum % 2);
-		}
+            if (sum > 1) {
+                up = 1;
+            } else {
+                up = 0;
+            }
 
-		if (up == 1) {
-			sb.append(1);
-		}
+            sb.append(sum % 2);
+        }
 
-		
-		return sb.reverse().toString();
+        if (up == 1) {
+            sb.append(1);
+        }
+
+
+        return sb.reverse().toString();
     }
 }

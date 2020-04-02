@@ -8,126 +8,127 @@ import java.util.StringTokenizer;
 
 public class SS {
 
-	static ArrayList<Chicken> c = new ArrayList<>();
-	static ArrayList<House> h = new ArrayList<>();
-	static int[][] arr;
+    static ArrayList<Chicken> c = new ArrayList<>();
+    static ArrayList<House> h = new ArrayList<>();
+    static int[][] arr;
 
-	static int N;
-	static int M;
+    static int N;
+    static int M;
 
-	static int MIN = Integer.MAX_VALUE;
-	public static void main(String[] args) throws IOException {
-		BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
-		StringTokenizer st;
+    static int MIN = Integer.MAX_VALUE;
 
-		st = new StringTokenizer(bf.readLine());
-		N = Integer.parseInt(st.nextToken());
-		M = Integer.parseInt(st.nextToken());
-		arr = new int[N][N];
+    public static void main(String[] args) throws IOException {
+        BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st;
 
-		for (int i = 0; i < N; i++) {
-			st = new StringTokenizer(bf.readLine());
-			for (int j = 0; j < N; j++) {
-				arr[i][j] = Integer.parseInt(st.nextToken());
-				// Áý
-				if (arr[i][j] == 1) {
-					House house = new House(i, j);
-					h.add(house);
-				} else if (arr[i][j] == 2) {
-					// Ä¡Å²Áý
-					Chicken chicken = new Chicken(i, j, 1);
-					c.add(chicken);
-				}
-			}
-		}
+        st = new StringTokenizer(bf.readLine());
+        N = Integer.parseInt(st.nextToken());
+        M = Integer.parseInt(st.nextToken());
+        arr = new int[N][N];
 
-		// index, Æó¾÷½ÃÅ°Áö ¾ÊÀº Ä¡Å²Áý
-		solve(0, c.size());
-		System.out.println(MIN);
-		bf.close();
-	}
+        for (int i = 0; i < N; i++) {
+            st = new StringTokenizer(bf.readLine());
+            for (int j = 0; j < N; j++) {
+                arr[i][j] = Integer.parseInt(st.nextToken());
+                // ï¿½ï¿½
+                if (arr[i][j] == 1) {
+                    House house = new House(i, j);
+                    h.add(house);
+                } else if (arr[i][j] == 2) {
+                    // Ä¡Å²ï¿½ï¿½
+                    Chicken chicken = new Chicken(i, j, 1);
+                    c.add(chicken);
+                }
+            }
+        }
 
-	static void solve(int index, int cnt) {
+        // index, ï¿½ï¿½ï¿½ï¿½ï¿½Å°ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Ä¡Å²ï¿½ï¿½
+        solve(0, c.size());
+        System.out.println(MIN);
+        bf.close();
+    }
 
-		// ³²¾ÆÀÖ´Â Ä¡Å²ÁýÀÌ Mº¸´Ù ÀÛÀ»¶§
-		if (cnt <= M) {
-			// µµ½Ã Ä¡Å²°Å¸®
-			int city = 0;
-			for (int i = 0; i < h.size(); i++) {
-				House house = h.get(i);
-				int min = Integer.MAX_VALUE;
-				for (int j = 0; j < c.size(); j++) {
-					Chicken chicken = c.get(j);
-					// Æó¾÷ÇÏÁö ¾ÊÀº Ä¡Å²ÁýÀÏ¶§
-					if (chicken.flag == 1) {
-						int temp = count(house, chicken);
-						// ÁýÀÇ Ä¡Å²°Å¸®
-						if (temp < min) {
-							min = temp;
-						}
-					} else {
-						continue;
-					}
-				}
-				city += min;
-			}
+    static void solve(int index, int cnt) {
 
-			if (city < MIN) {
-				MIN = city;
-			}
+        // ï¿½ï¿½ï¿½ï¿½ï¿½Ö´ï¿½ Ä¡Å²ï¿½ï¿½ï¿½ï¿½ Mï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+        if (cnt <= M) {
+            // ï¿½ï¿½ï¿½ï¿½ Ä¡Å²ï¿½Å¸ï¿½
+            int city = 0;
+            for (int i = 0; i < h.size(); i++) {
+                House house = h.get(i);
+                int min = Integer.MAX_VALUE;
+                for (int j = 0; j < c.size(); j++) {
+                    Chicken chicken = c.get(j);
+                    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Ä¡Å²ï¿½ï¿½ï¿½Ï¶ï¿½
+                    if (chicken.flag == 1) {
+                        int temp = count(house, chicken);
+                        // ï¿½ï¿½ï¿½ï¿½ Ä¡Å²ï¿½Å¸ï¿½
+                        if (temp < min) {
+                            min = temp;
+                        }
+                    } else {
+                        continue;
+                    }
+                }
+                city += min;
+            }
 
-			// Ä¡Å²ÁýÀº Àû¾îµµ 1°³
-			if (cnt <= 1) {
-				return;
-			}
-		}
+            if (city < MIN) {
+                MIN = city;
+            }
 
-		if (index == c.size()) {
-			return;
-		}
+            // Ä¡Å²ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½îµµ 1ï¿½ï¿½
+            if (cnt <= 1) {
+                return;
+            }
+        }
 
-		// Æó¾÷ x
-		solve(index + 1, cnt);
+        if (index == c.size()) {
+            return;
+        }
 
-		// Æó¾÷ o
-		Chicken chicken = c.get(index);
-		chicken.flag = 0;
-		c.set(index, chicken);
+        // ï¿½ï¿½ï¿½ x
+        solve(index + 1, cnt);
 
-		solve(index + 1, cnt - 1);
+        // ï¿½ï¿½ï¿½ o
+        Chicken chicken = c.get(index);
+        chicken.flag = 0;
+        c.set(index, chicken);
 
-		// º¹±¸
-		chicken = c.get(index);
-		chicken.flag = 1;
-		c.set(index, chicken);
+        solve(index + 1, cnt - 1);
 
-	}
+        // ï¿½ï¿½ï¿½ï¿½
+        chicken = c.get(index);
+        chicken.flag = 1;
+        c.set(index, chicken);
 
-	static int count(House h, Chicken c) {
+    }
 
-		return Math.abs(h.x - c.x) + Math.abs(h.y - c.y);
+    static int count(House h, Chicken c) {
 
-	}
+        return Math.abs(h.x - c.x) + Math.abs(h.y - c.y);
 
-	static class Chicken {
-		int x;
-		int y;
-		int flag;
+    }
 
-		Chicken(int x, int y, int flag) {
-			this.x = x;
-			this.y = y;
-			this.flag = flag;
-		}
-	}
+    static class Chicken {
+        int x;
+        int y;
+        int flag;
 
-	static class House {
-		int x;
-		int y;
+        Chicken(int x, int y, int flag) {
+            this.x = x;
+            this.y = y;
+            this.flag = flag;
+        }
+    }
 
-		House(int x, int y) {
-			this.x = x;
-			this.y = y;
-		}
-	}
+    static class House {
+        int x;
+        int y;
+
+        House(int x, int y) {
+            this.x = x;
+            this.y = y;
+        }
+    }
 }

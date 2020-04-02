@@ -6,122 +6,122 @@ import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
 public class N1 {
-	public static int result;
-	public static int[][] arr;
-	public static int[][] check;
-	public static int N;
-	public static int L;
+    public static int result;
+    public static int[][] arr;
+    public static int[][] check;
+    public static int N;
+    public static int L;
 
-	public static void main(String[] args) throws IOException {
-		BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
-		StringTokenizer st;
+    public static void main(String[] args) throws IOException {
+        BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st;
 
-		st = new StringTokenizer(bf.readLine());
-		N = Integer.parseInt(st.nextToken());
-		L = Integer.parseInt(st.nextToken());
+        st = new StringTokenizer(bf.readLine());
+        N = Integer.parseInt(st.nextToken());
+        L = Integer.parseInt(st.nextToken());
 
-		arr = new int[N][N];
-	
+        arr = new int[N][N];
 
-		for (int i = 0; i < N; i++) {
-			st = new StringTokenizer(bf.readLine());
-			for (int j = 0; j < N; j++) {
-				arr[i][j] = Integer.parseInt(st.nextToken());
-			}
-		}
-		
-		check = new int[N][N];
-		checkPath(arr);
-		check = new int[N][N];
-		checkPath(rotateArr(arr));
-		System.out.println(result);
-		bf.close();
-	}
 
-	public static void checkPath(int[][] arr) {
+        for (int i = 0; i < N; i++) {
+            st = new StringTokenizer(bf.readLine());
+            for (int j = 0; j < N; j++) {
+                arr[i][j] = Integer.parseInt(st.nextToken());
+            }
+        }
 
-		// ÀÌµ¿°æ·Î´Â ÁÂ -> ¿ì
-		for (int i = 0; i < N; i++) {
-			// °¢ ÁÙº°·Î true or false Ã¼Å©
-			boolean flag = true;
-			for (int j = 1; j < N; j++) {
-				// ÀÛ -> Å«
-				if (arr[i][j] > arr[i][j - 1]) {
-					// 1Â÷ÀÌ°¡ ¾Æ´Ï¸é false
-					if (arr[i][j] - arr[i][j - 1] != 1) {
-						flag = false;
-						break;
-					} else {
-						// 1Â÷ÀÌ ³­´Ù¸é? base¶û °è¼Ó °ªÀÌ °°¾Æ¾ßÇÔ
-						int base = arr[i][j - 1];
+        check = new int[N][N];
+        checkPath(arr);
+        check = new int[N][N];
+        checkPath(rotateArr(arr));
+        System.out.println(result);
+        bf.close();
+    }
 
-						for (int k = 1; k <= L; k++) {
-							if (safe(j - k) && arr[i][j - k] == base && check[i][j - k] == 0) {
-								check[i][j - k] = 1;
-							} else {
-								flag = false;
-								break;
-							}
-						}
-					}
+    public static void checkPath(int[][] arr) {
 
-				} else if (arr[i][j] < arr[i][j - 1]) {
-					// Å« -> ÀÛ
-					// 1Â÷ÀÌ°¡ ¾Æ´Ï¸é false
-					if (arr[i][j - 1] - arr[i][j] != 1) {
-						flag = false;
-						break;
-					} else {
-						// 1Â÷ÀÌ ³­´Ù¸é? base¶û °è¼Ó °ªÀÌ °°¾Æ¾ßÇÔ
-						int base = arr[i][j];
+        // ï¿½Ìµï¿½ï¿½ï¿½Î´ï¿½ ï¿½ï¿½ -> ï¿½ï¿½
+        for (int i = 0; i < N; i++) {
+            // ï¿½ï¿½ ï¿½Ùºï¿½ï¿½ï¿½ true or false Ã¼Å©
+            boolean flag = true;
+            for (int j = 1; j < N; j++) {
+                // ï¿½ï¿½ -> Å«
+                if (arr[i][j] > arr[i][j - 1]) {
+                    // 1ï¿½ï¿½ï¿½Ì°ï¿½ ï¿½Æ´Ï¸ï¿½ false
+                    if (arr[i][j] - arr[i][j - 1] != 1) {
+                        flag = false;
+                        break;
+                    } else {
+                        // 1ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ù¸ï¿½? baseï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Æ¾ï¿½ï¿½ï¿½
+                        int base = arr[i][j - 1];
 
-						for (int k = 0; k < L; k++) {
-							if (safe(j + k) && arr[i][j + k] == base && check[i][j + k] == 0) {
-								check[i][j + k] = 1;
-							} else {
-								flag = false;
-								break;
-							}
-						}
-					}
-				} else {
+                        for (int k = 1; k <= L; k++) {
+                            if (safe(j - k) && arr[i][j - k] == base && check[i][j - k] == 0) {
+                                check[i][j - k] = 1;
+                            } else {
+                                flag = false;
+                                break;
+                            }
+                        }
+                    }
 
-				}
+                } else if (arr[i][j] < arr[i][j - 1]) {
+                    // Å« -> ï¿½ï¿½
+                    // 1ï¿½ï¿½ï¿½Ì°ï¿½ ï¿½Æ´Ï¸ï¿½ false
+                    if (arr[i][j - 1] - arr[i][j] != 1) {
+                        flag = false;
+                        break;
+                    } else {
+                        // 1ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ù¸ï¿½? baseï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Æ¾ï¿½ï¿½ï¿½
+                        int base = arr[i][j];
 
-				// ÀÌ¹Ì ±æÀÌ ¾ø´Â°Ô °áÁ¤³µÀ¸¸é ´ÙÀ½ÁÙ·Î ÀÌµ¿
-				if (!flag) {
-					j = N;
-				}
-			}
-			if (flag) {
-				result++;
-			}
-		}
-	}
+                        for (int k = 0; k < L; k++) {
+                            if (safe(j + k) && arr[i][j + k] == base && check[i][j + k] == 0) {
+                                check[i][j + k] = 1;
+                            } else {
+                                flag = false;
+                                break;
+                            }
+                        }
+                    }
+                } else {
 
-	public static boolean safe(int x) {
-		return (x >= 0) && (x < N);
-	}
+                }
 
-	public static int[][] rotateArr(int[][] arr) {
-		int[][] temp = new int[N][N];
+                // ï¿½Ì¹ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Â°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ù·ï¿½ ï¿½Ìµï¿½
+                if (!flag) {
+                    j = N;
+                }
+            }
+            if (flag) {
+                result++;
+            }
+        }
+    }
 
-		for (int i = 0; i < N; i++) {
-			for (int j = 0; j < N; j++) {
-				temp[i][j] = arr[j][(N - 1) - i];
-			}
-		}
+    public static boolean safe(int x) {
+        return (x >= 0) && (x < N);
+    }
 
-		return temp;
-	}
+    public static int[][] rotateArr(int[][] arr) {
+        int[][] temp = new int[N][N];
 
-	public static void printArr(int[][] arr) {
+        for (int i = 0; i < N; i++) {
+            for (int j = 0; j < N; j++) {
+                temp[i][j] = arr[j][(N - 1) - i];
+            }
+        }
 
-		for (int i = 0; i < N; i++) {
-			for (int j = 0; j < N; j++) {
-				System.out.print(arr[i][j] + " ");
-			}
-			System.out.println();
-		}
-	}
+        return temp;
+    }
+
+    public static void printArr(int[][] arr) {
+
+        for (int i = 0; i < N; i++) {
+            for (int j = 0; j < N; j++) {
+                System.out.print(arr[i][j] + " ");
+            }
+            System.out.println();
+        }
+    }
 }

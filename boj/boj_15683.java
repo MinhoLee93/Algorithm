@@ -8,216 +8,216 @@ import java.util.ArrayList;
 import java.util.StringTokenizer;
 
 public class N {
-	static int N;
-	static int M;
-	static int[][] arr;
-	static ArrayList<Node> cctv = new ArrayList<Node>();
-	static int MIN = Integer.MAX_VALUE;
+    static int N;
+    static int M;
+    static int[][] arr;
+    static ArrayList<Node> cctv = new ArrayList<Node>();
+    static int MIN = Integer.MAX_VALUE;
 
-	public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException {
 
-		BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
-		StringTokenizer st;
+        BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st;
 
-		st = new StringTokenizer(bf.readLine());
-		N = Integer.parseInt(st.nextToken());
-		M = Integer.parseInt(st.nextToken());
-		arr = new int[N][M];
+        st = new StringTokenizer(bf.readLine());
+        N = Integer.parseInt(st.nextToken());
+        M = Integer.parseInt(st.nextToken());
+        arr = new int[N][M];
 
-		for (int i = 0; i < N; i++) {
-			st = new StringTokenizer(bf.readLine());
-			for (int j = 0; j < M; j++) {
-				int x = Integer.parseInt(st.nextToken());
-				if (1 <= x && x <= 5) {
-					// cctv add
-					Node n = new Node(i, j);
-					cctv.add(n);
-				}
-				// arr
-				arr[i][j] = x;
-			}
-		}
+        for (int i = 0; i < N; i++) {
+            st = new StringTokenizer(bf.readLine());
+            for (int j = 0; j < M; j++) {
+                int x = Integer.parseInt(st.nextToken());
+                if (1 <= x && x <= 5) {
+                    // cctv add
+                    Node n = new Node(i, j);
+                    cctv.add(n);
+                }
+                // arr
+                arr[i][j] = x;
+            }
+        }
 
-		solve(arr, 0);
-		System.out.println(MIN);
-		bf.close();
+        solve(arr, 0);
+        System.out.println(MIN);
+        bf.close();
 
-	}
+    }
 
-	static int check(int[][] arr) {
+    static int check(int[][] arr) {
 
-		int temp = 0;
+        int temp = 0;
 
-		for (int i = 0; i < N; i++) {
-			for (int j = 0; j < M; j++) {
-				if (arr[i][j] == 0) {
-					temp++;
-				}
-			}
-		}
+        for (int i = 0; i < N; i++) {
+            for (int j = 0; j < M; j++) {
+                if (arr[i][j] == 0) {
+                    temp++;
+                }
+            }
+        }
 
-		return temp;
-	}
+        return temp;
+    }
 
-	static void solve(int[][] arr, int index) {
-		//printArr(arr);
-		//System.out.println("--------------");
+    static void solve(int[][] arr, int index) {
+        //printArr(arr);
+        //System.out.println("--------------");
 
-		if (index >= cctv.size()) {
-			// MIN check
-			int result = check(arr);
-			if (result < MIN) {
-				MIN = result;
-			}
+        if (index >= cctv.size()) {
+            // MIN check
+            int result = check(arr);
+            if (result < MIN) {
+                MIN = result;
+            }
 
-			return;
-		}
+            return;
+        }
 
-		Node ne = cctv.get(index);
-		int x = ne.x;
-		int y = ne.y;
-		switch (arr[x][y]) {
-		case 1:
-			solve(right(copy(arr), x, y), index + 1);
-			solve(down(copy(arr), x, y), index + 1);
-			solve(left(copy(arr), x, y), index + 1);
-			solve(up(copy(arr), x, y), index + 1);
-			break;
-		case 2:
-			solve(left(right(copy(arr), x, y), x, y), index + 1);
-			solve(down(up(copy(arr), x, y), x, y), index + 1);
-			break;
-		case 3:
-			solve(up(right(copy(arr), x, y), x, y), index + 1);
-			solve(right(down(copy(arr), x, y), x, y), index + 1);
-			solve(down(left(copy(arr), x, y), x, y), index + 1);
-			solve(left(up(copy(arr), x, y), x, y), index + 1);
-			break;
-		case 4:
-			solve(left(up(right(copy(arr), x, y), x, y), x, y), index + 1);
-			solve(up(right(down(copy(arr), x, y), x, y), x, y), index + 1);
-			solve(right(down(left(copy(arr), x, y), x, y), x, y), index + 1);
-			solve(down(left(up(copy(arr), x, y), x, y), x, y), index + 1);
-			break;
-		case 5:
-			solve(left(up(down(right(copy(arr), x, y), x, y), x, y), x, y), index + 1);
-			break;
-		}
+        Node ne = cctv.get(index);
+        int x = ne.x;
+        int y = ne.y;
+        switch (arr[x][y]) {
+            case 1:
+                solve(right(copy(arr), x, y), index + 1);
+                solve(down(copy(arr), x, y), index + 1);
+                solve(left(copy(arr), x, y), index + 1);
+                solve(up(copy(arr), x, y), index + 1);
+                break;
+            case 2:
+                solve(left(right(copy(arr), x, y), x, y), index + 1);
+                solve(down(up(copy(arr), x, y), x, y), index + 1);
+                break;
+            case 3:
+                solve(up(right(copy(arr), x, y), x, y), index + 1);
+                solve(right(down(copy(arr), x, y), x, y), index + 1);
+                solve(down(left(copy(arr), x, y), x, y), index + 1);
+                solve(left(up(copy(arr), x, y), x, y), index + 1);
+                break;
+            case 4:
+                solve(left(up(right(copy(arr), x, y), x, y), x, y), index + 1);
+                solve(up(right(down(copy(arr), x, y), x, y), x, y), index + 1);
+                solve(right(down(left(copy(arr), x, y), x, y), x, y), index + 1);
+                solve(down(left(up(copy(arr), x, y), x, y), x, y), index + 1);
+                break;
+            case 5:
+                solve(left(up(down(right(copy(arr), x, y), x, y), x, y), x, y), index + 1);
+                break;
+        }
 
-	}
+    }
 
-	static int[][] copy(int[][] arr) {
-		int[][] temp = new int[N][M];
+    static int[][] copy(int[][] arr) {
+        int[][] temp = new int[N][M];
 
-		for (int i = 0; i < N; i++) {
-			for (int j = 0; j < M; j++) {
-				temp[i][j] = arr[i][j];
-			}
-		}
+        for (int i = 0; i < N; i++) {
+            for (int j = 0; j < M; j++) {
+                temp[i][j] = arr[i][j];
+            }
+        }
 
-		return temp;
-	}
+        return temp;
+    }
 
-	static boolean safe(int x, int y) {
-		return (x >= 0) && (y >= 0) && (x < N) && (y < M);
-	}
+    static boolean safe(int x, int y) {
+        return (x >= 0) && (y >= 0) && (x < N) && (y < M);
+    }
 
-	static int[][] right(int[][] arr, int x, int y) {
+    static int[][] right(int[][] arr, int x, int y) {
 
-		int index = 1;
-		while (safe(x, y + index)) {
-			// º®ÀÏ¶§
-			if (arr[x][y + index] == 6) {
-				return arr;
-				// ºó°÷ÀÏ¶§
-			} else if (arr[x][y + index] == 0) {
-				arr[x][y + index] = 7;
+        int index = 1;
+        while (safe(x, y + index)) {
+            // ï¿½ï¿½ï¿½Ï¶ï¿½
+            if (arr[x][y + index] == 6) {
+                return arr;
+                // ï¿½ï¿½ï¿½ï¿½Ï¶ï¿½
+            } else if (arr[x][y + index] == 0) {
+                arr[x][y + index] = 7;
 
-			} else {
+            } else {
 
-			}
-			index++;
-		}
+            }
+            index++;
+        }
 
-		return arr;
-	}
+        return arr;
+    }
 
-	static int[][] left(int[][] arr, int x, int y) {
+    static int[][] left(int[][] arr, int x, int y) {
 
-		int index = 1;
-		while (safe(x, y - index)) {
-			// º®ÀÏ¶§
-			if (arr[x][y - index] == 6) {
-				return arr;
-				// ºó°÷ÀÏ¶§
-			} else if (arr[x][y - index] == 0) {
-				arr[x][y - index] = 7;
+        int index = 1;
+        while (safe(x, y - index)) {
+            // ï¿½ï¿½ï¿½Ï¶ï¿½
+            if (arr[x][y - index] == 6) {
+                return arr;
+                // ï¿½ï¿½ï¿½ï¿½Ï¶ï¿½
+            } else if (arr[x][y - index] == 0) {
+                arr[x][y - index] = 7;
 
-			} else {
+            } else {
 
-			}
-			index++;
-		}
+            }
+            index++;
+        }
 
-		return arr;
-	}
+        return arr;
+    }
 
-	static int[][] up(int[][] arr, int x, int y) {
+    static int[][] up(int[][] arr, int x, int y) {
 
-		int index = 1;
-		while (safe(x - index, y)) {
-			// º®ÀÏ¶§
-			if (arr[x - index][y] == 6) {
-				return arr;
-				// ºó°÷ÀÏ¶§
-			} else if (arr[x - index][y] == 0) {
-				arr[x - index][y] = 7;
+        int index = 1;
+        while (safe(x - index, y)) {
+            // ï¿½ï¿½ï¿½Ï¶ï¿½
+            if (arr[x - index][y] == 6) {
+                return arr;
+                // ï¿½ï¿½ï¿½ï¿½Ï¶ï¿½
+            } else if (arr[x - index][y] == 0) {
+                arr[x - index][y] = 7;
 
-			} else {
+            } else {
 
-			}
-			index++;
-		}
+            }
+            index++;
+        }
 
-		return arr;
-	}
+        return arr;
+    }
 
-	static int[][] down(int[][] arr, int x, int y) {
+    static int[][] down(int[][] arr, int x, int y) {
 
-		int index = 1;
-		while (safe(x + index, y)) {
-			// º®ÀÏ¶§
-			if (arr[x + index][y] == 6) {
-				return arr;
-				// ºó°÷ÀÏ¶§
-			} else if (arr[x + index][y] == 0) {
-				arr[x + index][y] = 7;
+        int index = 1;
+        while (safe(x + index, y)) {
+            // ï¿½ï¿½ï¿½Ï¶ï¿½
+            if (arr[x + index][y] == 6) {
+                return arr;
+                // ï¿½ï¿½ï¿½ï¿½Ï¶ï¿½
+            } else if (arr[x + index][y] == 0) {
+                arr[x + index][y] = 7;
 
-			} else {
+            } else {
 
-			}
-			index++;
-		}
+            }
+            index++;
+        }
 
-		return arr;
-	}
+        return arr;
+    }
 
-	static void printArr(int[][] arr) {
-		for (int i = 0; i < N; i++) {
-			for (int j = 0; j < M; j++) {
-				System.out.print(arr[i][j] + " ");
-			}
-			System.out.println();
-		}
-	}
+    static void printArr(int[][] arr) {
+        for (int i = 0; i < N; i++) {
+            for (int j = 0; j < M; j++) {
+                System.out.print(arr[i][j] + " ");
+            }
+            System.out.println();
+        }
+    }
 
-	static class Node {
-		int x;
-		int y;
+    static class Node {
+        int x;
+        int y;
 
-		Node(int x, int y) {
-			this.x = x;
-			this.y = y;
-		}
-	}
+        Node(int x, int y) {
+            this.x = x;
+            this.y = y;
+        }
+    }
 }

@@ -1,17 +1,17 @@
 class Solution {
     public boolean isSubsequence(String s, String t) {
         int check = -1;
-		for (int i = 0; i < s.length(); i++) {
-			String temp = s.substring(i, i + 1);
+        for (int i = 0; i < s.length(); i++) {
+            String temp = s.substring(i, i + 1);
 
-			// ÀÖÀ» °æ¿ì
-			int find = t.indexOf(temp, check + 1);
-			if (find != -1) {
-				check = find;
-			} else {
-				return false;
-			}
-		}
-		return true;
+            // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
+            int find = t.indexOf(temp, check + 1);
+            if (find != -1) {
+                check = find;
+            } else {
+                return false;
+            }
+        }
+        return true;
     }
 }

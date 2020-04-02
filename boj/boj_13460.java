@@ -6,335 +6,335 @@ import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
 public class N2 {
-	static int N;
-	static int M;
-	static char[][] arr;
-	static int[][][][][] check;
-	static int MIN = Integer.MAX_VALUE;
+    static int N;
+    static int M;
+    static char[][] arr;
+    static int[][][][][] check;
+    static int MIN = Integer.MAX_VALUE;
 
-	public static void main(String[] args) throws IOException {
-		BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
-		StringTokenizer st;
+    public static void main(String[] args) throws IOException {
+        BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st;
 
-		st = new StringTokenizer(bf.readLine());
-		N = Integer.parseInt(st.nextToken());
-		M = Integer.parseInt(st.nextToken());
-		arr = new char[N][M];
-		check = new int[11][N][M][N][M];
+        st = new StringTokenizer(bf.readLine());
+        N = Integer.parseInt(st.nextToken());
+        M = Integer.parseInt(st.nextToken());
+        arr = new char[N][M];
+        check = new int[11][N][M][N][M];
 
-		for (int i = 0; i < N; i++) {
-			String s = bf.readLine();
-			char[] c = s.toCharArray();
-			for (int j = 0; j < M; j++) {
-				arr[i][j] = c[j];
-			}
-		}
+        for (int i = 0; i < N; i++) {
+            String s = bf.readLine();
+            char[] c = s.toCharArray();
+            for (int j = 0; j < M; j++) {
+                arr[i][j] = c[j];
+            }
+        }
 
-		solve(arr, 1, 1);
-		solve(arr, 1, 2);
-		solve(arr, 1, 3);
-		solve(arr, 1, 4);
+        solve(arr, 1, 1);
+        solve(arr, 1, 2);
+        solve(arr, 1, 3);
+        solve(arr, 1, 4);
 
-		if (MIN == Integer.MAX_VALUE) {
-			System.out.println(-1);
-		} else {
-			System.out.println(MIN);
-		}
+        if (MIN == Integer.MAX_VALUE) {
+            System.out.println(-1);
+        } else {
+            System.out.println(MIN);
+        }
 
-		bf.close();
-	}
+        bf.close();
+    }
 
-	public static boolean safe(int x, int y) {
-		return (x >= 0) && (x < N) && (y >= 0) && (y < M);
-	}
+    public static boolean safe(int x, int y) {
+        return (x >= 0) && (x < N) && (y >= 0) && (y < M);
+    }
 
-	public static int go(char[][] arr) {
+    public static int go(char[][] arr) {
 
-		int n = arr.length;
-		int m = arr[0].length;
+        int n = arr.length;
+        int m = arr[0].length;
 
-		// »¡°£°ø ÆÄ¶õ°ø ±¸¸Û
-		boolean blue = false;
-		boolean red = false;
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ä¶ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+        boolean blue = false;
+        boolean red = false;
 
-		for (int i = 1; i < n - 1; i++) {
-			for (int j = 1; j < m - 1; j++) {
-				if (arr[i][j] == 'B') {
-					for (int k = 1; (j - k) >= 1; k++) {
-						if (arr[i][j - k] == 'O') {
-							arr[i][j] = '.';
-							blue = true;
-							break;
-						} else if (arr[i][j - k] == '.') {
-							arr[i][j - k] = 'B';
-							arr[i][j] = '.';
-							j = j - k;
-							k = 0;
+        for (int i = 1; i < n - 1; i++) {
+            for (int j = 1; j < m - 1; j++) {
+                if (arr[i][j] == 'B') {
+                    for (int k = 1; (j - k) >= 1; k++) {
+                        if (arr[i][j - k] == 'O') {
+                            arr[i][j] = '.';
+                            blue = true;
+                            break;
+                        } else if (arr[i][j - k] == '.') {
+                            arr[i][j - k] = 'B';
+                            arr[i][j] = '.';
+                            j = j - k;
+                            k = 0;
 
-						} else {
+                        } else {
 
-							break;
-						}
-					}
-				} else if (arr[i][j] == 'R') {
-					for (int k = 1; (j - k) >= 1; k++) {
-						if (arr[i][j - k] == 'O') {
-							arr[i][j] = '.';
-							red = true;
-							break;
-						} else if (arr[i][j - k] == '.') {
-							arr[i][j - k] = 'R';
-							arr[i][j] = '.';
-							j = j - k;
-							k = 0;
+                            break;
+                        }
+                    }
+                } else if (arr[i][j] == 'R') {
+                    for (int k = 1; (j - k) >= 1; k++) {
+                        if (arr[i][j - k] == 'O') {
+                            arr[i][j] = '.';
+                            red = true;
+                            break;
+                        } else if (arr[i][j - k] == '.') {
+                            arr[i][j - k] = 'R';
+                            arr[i][j] = '.';
+                            j = j - k;
+                            k = 0;
 
-						} else {
-							break;
-						}
-					}
-				} else {
-					continue;
-				}
-			}
-		}
+                        } else {
+                            break;
+                        }
+                    }
+                } else {
+                    continue;
+                }
+            }
+        }
 
-		// µÑ´Ù ±¸¸Û¿¡ ºüÁö¸é false
-		if (blue && red) {
-			return 2;
-		} else if (red && !blue) {
-			return 1;
-		} else if (blue) {
-			return 2;
-		} else {
-			return 0;
-		}
+        // ï¿½Ñ´ï¿½ ï¿½ï¿½ï¿½Û¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ false
+        if (blue && red) {
+            return 2;
+        } else if (red && !blue) {
+            return 1;
+        } else if (blue) {
+            return 2;
+        } else {
+            return 0;
+        }
 
-	}
+    }
 
-	// »¡,ÆÄ¶õ°ø À§Ä¡ Áßº¹ Ã¼Å©
-	public static boolean check(char[][] arr, int cnt) {
+    // ï¿½ï¿½,ï¿½Ä¶ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ ï¿½ßºï¿½ Ã¼Å©
+    public static boolean check(char[][] arr, int cnt) {
 
-		int bx = 0;
-		int by = 0;
-		int rx = 0;
-		int ry = 0;
+        int bx = 0;
+        int by = 0;
+        int rx = 0;
+        int ry = 0;
 
-		boolean blue = false;
-		boolean red = false;
-		for (int i = 0; i < N; i++) {
-			for (int j = 0; j < M; j++) {
-				if (arr[i][j] == 'B') {
-					bx = i;
-					by = j;
-					blue = true;
-				} else if (arr[i][j] == 'R') {
-					rx = i;
-					ry = j;
-					red = true;
-				}
+        boolean blue = false;
+        boolean red = false;
+        for (int i = 0; i < N; i++) {
+            for (int j = 0; j < M; j++) {
+                if (arr[i][j] == 'B') {
+                    bx = i;
+                    by = j;
+                    blue = true;
+                } else if (arr[i][j] == 'R') {
+                    rx = i;
+                    ry = j;
+                    red = true;
+                }
 
-				if (blue && red) {
-					if (check[cnt][bx][by][rx][ry] == 0) {
-						check[cnt][bx][by][rx][ry] = 1;
-						return true;
-					} else {
-						return false;
-					}
-				}
-			}
-		}
+                if (blue && red) {
+                    if (check[cnt][bx][by][rx][ry] == 0) {
+                        check[cnt][bx][by][rx][ry] = 1;
+                        return true;
+                    } else {
+                        return false;
+                    }
+                }
+            }
+        }
 
-		return false;
-	}
+        return false;
+    }
 
-	// ¿Þ/¿À/¾Æ·¡/À§
-	public static void solve(char[][] arr, int cnt, int flag) {
-		//System.out.println("cnt : " + cnt);
+    // ï¿½ï¿½/ï¿½ï¿½/ï¿½Æ·ï¿½/ï¿½ï¿½
+    public static void solve(char[][] arr, int cnt, int flag) {
+        //System.out.println("cnt : " + cnt);
 
-		if (cnt > MIN) {
-			return;
-		}
+        if (cnt > MIN) {
+            return;
+        }
 
-		if (cnt > 10) {
-			return;
-		}
+        if (cnt > 10) {
+            return;
+        }
 
-		switch (flag) {
-		// ¿Þ
-		case 1:
-			//System.out.println("¿Þ");
-			char[][] t1 = copy(arr);
-			int r1 = go(t1);
+        switch (flag) {
+            // ï¿½ï¿½
+            case 1:
+                //System.out.println("ï¿½ï¿½");
+                char[][] t1 = copy(arr);
+                int r1 = go(t1);
 
-			//print(t1);
+                //print(t1);
 
-			if (r1 == 0) {
-				if (check(t1, cnt)) {
-					// ÁøÇà
-					solve(t1, cnt + 1, 2);
-					solve(t1, cnt + 1, 3);
-					solve(t1, cnt + 1, 4);
-				} else {
-					return;
-				}
-			} else if (r1 == 1) {
-				// ¼º°ø
-				if (cnt < MIN) {
-					MIN = cnt;
-				}
-				return;
-			} else if (r1 == 2) {
-				// ½ÇÆÐ && ŒQ°°Àº À§Ä¡
-				return;
-			}
+                if (r1 == 0) {
+                    if (check(t1, cnt)) {
+                        // ï¿½ï¿½ï¿½ï¿½
+                        solve(t1, cnt + 1, 2);
+                        solve(t1, cnt + 1, 3);
+                        solve(t1, cnt + 1, 4);
+                    } else {
+                        return;
+                    }
+                } else if (r1 == 1) {
+                    // ï¿½ï¿½ï¿½ï¿½
+                    if (cnt < MIN) {
+                        MIN = cnt;
+                    }
+                    return;
+                } else if (r1 == 2) {
+                    // ï¿½ï¿½ï¿½ï¿½ && ï¿½Qï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡
+                    return;
+                }
 
-			break;
-		// ¿À
-		case 2:
-			//System.out.println("¿À");
-			char[][] t2 = left(left(arr));
-			int r2 = go(t2);
-			t2 = right(right(t2));
-			//print(t2);
+                break;
+            // ï¿½ï¿½
+            case 2:
+                //System.out.println("ï¿½ï¿½");
+                char[][] t2 = left(left(arr));
+                int r2 = go(t2);
+                t2 = right(right(t2));
+                //print(t2);
 
-			if (r2 == 0) {
+                if (r2 == 0) {
 
-				if (check(t2, cnt)) {
-					// ÁøÇà
-					solve(t2, cnt + 1, 1);
-					solve(t2, cnt + 1, 3);
-					solve(t2, cnt + 1, 4);
-				} else {
-					return;
-				}
-			} else if (r2 == 1) {
-				// ¼º°ø
-				if (cnt < MIN) {
-					MIN = cnt;
-				}
-				return;
-			} else if (r2 == 2) {
-				// ½ÇÆÐ && ŒQ°°Àº À§Ä¡
-				return;
-			}
+                    if (check(t2, cnt)) {
+                        // ï¿½ï¿½ï¿½ï¿½
+                        solve(t2, cnt + 1, 1);
+                        solve(t2, cnt + 1, 3);
+                        solve(t2, cnt + 1, 4);
+                    } else {
+                        return;
+                    }
+                } else if (r2 == 1) {
+                    // ï¿½ï¿½ï¿½ï¿½
+                    if (cnt < MIN) {
+                        MIN = cnt;
+                    }
+                    return;
+                } else if (r2 == 2) {
+                    // ï¿½ï¿½ï¿½ï¿½ && ï¿½Qï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡
+                    return;
+                }
 
-			break;
-		// ¾Æ·¡
-		case 3:
-			//System.out.println("¾Æ·¡");
-			char[][] t3 = right(arr);
-			int r3 = go(t3);
-			t3 = left(t3);
-			//print(t3);
+                break;
+            // ï¿½Æ·ï¿½
+            case 3:
+                //System.out.println("ï¿½Æ·ï¿½");
+                char[][] t3 = right(arr);
+                int r3 = go(t3);
+                t3 = left(t3);
+                //print(t3);
 
-			if (r3 == 0) {
-				if (check(t3, cnt)) {
-					// ÁøÇà
-					solve(t3, cnt + 1, 1);
-					solve(t3, cnt + 1, 2);
-					solve(t3, cnt + 1, 4);
-				} else {
-					return;
-				}
-			} else if (r3 == 1) {
-				// ¼º°ø
-				if (cnt < MIN) {
-					MIN = cnt;
-				}
-				return;
-			} else if (r3 == 2) {
-				// ½ÇÆÐ && ŒQ°°Àº À§Ä¡
-				return;
-			}
+                if (r3 == 0) {
+                    if (check(t3, cnt)) {
+                        // ï¿½ï¿½ï¿½ï¿½
+                        solve(t3, cnt + 1, 1);
+                        solve(t3, cnt + 1, 2);
+                        solve(t3, cnt + 1, 4);
+                    } else {
+                        return;
+                    }
+                } else if (r3 == 1) {
+                    // ï¿½ï¿½ï¿½ï¿½
+                    if (cnt < MIN) {
+                        MIN = cnt;
+                    }
+                    return;
+                } else if (r3 == 2) {
+                    // ï¿½ï¿½ï¿½ï¿½ && ï¿½Qï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡
+                    return;
+                }
 
-			break;
-		// À§
-		case 4:
-			//System.out.println("À§");
-			char[][] t4 = left(arr);
-			int r4 = go(t4);
-			t4 = right(t4);
-			//print(t4);
+                break;
+            // ï¿½ï¿½
+            case 4:
+                //System.out.println("ï¿½ï¿½");
+                char[][] t4 = left(arr);
+                int r4 = go(t4);
+                t4 = right(t4);
+                //print(t4);
 
-			if (r4 == 0) {
-				if (check(t4, cnt)) {
-					// ÁøÇà
-					solve(t4, cnt + 1, 1);
-					solve(t4, cnt + 1, 2);
-					solve(t4, cnt + 1, 3);
-				} else {
-					return;
-				}
+                if (r4 == 0) {
+                    if (check(t4, cnt)) {
+                        // ï¿½ï¿½ï¿½ï¿½
+                        solve(t4, cnt + 1, 1);
+                        solve(t4, cnt + 1, 2);
+                        solve(t4, cnt + 1, 3);
+                    } else {
+                        return;
+                    }
 
-			} else if (r4 == 1) {
-				// ¼º°ø
-				if (cnt < MIN) {
-					MIN = cnt;
-				}
-				return;
-			} else if (r4 == 2) {
-				// ½ÇÆÐ && ŒQ°°Àº À§Ä¡
-				return;
-			}
+                } else if (r4 == 1) {
+                    // ï¿½ï¿½ï¿½ï¿½
+                    if (cnt < MIN) {
+                        MIN = cnt;
+                    }
+                    return;
+                } else if (r4 == 2) {
+                    // ï¿½ï¿½ï¿½ï¿½ && ï¿½Qï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡
+                    return;
+                }
 
-			break;
-		}
-	}
+                break;
+        }
+    }
 
-	public static char[][] copy(char[][] arr) {
-		int n = arr.length;
-		int m = arr[0].length;
+    public static char[][] copy(char[][] arr) {
+        int n = arr.length;
+        int m = arr[0].length;
 
-		char[][] temp = new char[n][m];
+        char[][] temp = new char[n][m];
 
-		for (int i = 0; i < n; i++) {
-			for (int j = 0; j < m; j++) {
-				temp[i][j] = arr[i][j];
-			}
-		}
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                temp[i][j] = arr[i][j];
+            }
+        }
 
-		return temp;
-	}
+        return temp;
+    }
 
-	public static char[][] right(char[][] arr) {
-		int n = arr.length;
-		int m = arr[0].length;
+    public static char[][] right(char[][] arr) {
+        int n = arr.length;
+        int m = arr[0].length;
 
-		char[][] temp = new char[m][n];
+        char[][] temp = new char[m][n];
 
-		for (int i = 0; i < m; i++) {
-			for (int j = 0; j < n; j++) {
-				temp[i][j] = arr[(n - 1) - j][i];
-			}
-		}
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                temp[i][j] = arr[(n - 1) - j][i];
+            }
+        }
 
-		return temp;
-	}
+        return temp;
+    }
 
-	public static char[][] left(char[][] arr) {
-		int n = arr.length;
-		int m = arr[0].length;
+    public static char[][] left(char[][] arr) {
+        int n = arr.length;
+        int m = arr[0].length;
 
-		char[][] temp = new char[m][n];
+        char[][] temp = new char[m][n];
 
-		for (int i = 0; i < m; i++) {
-			for (int j = 0; j < n; j++) {
-				temp[i][j] = arr[j][(m - 1) - i];
-			}
-		}
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                temp[i][j] = arr[j][(m - 1) - i];
+            }
+        }
 
-		return temp;
-	}
+        return temp;
+    }
 
-	public static void print(char[][] arr) {
-		int n = arr.length;
-		int m = arr[0].length;
+    public static void print(char[][] arr) {
+        int n = arr.length;
+        int m = arr[0].length;
 
-		for (int i = 0; i < n; i++) {
-			for (int j = 0; j < m; j++) {
-				System.out.print(arr[i][j] + " ");
-			}
-			System.out.println();
-		}
-	}
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                System.out.print(arr[i][j] + " ");
+            }
+            System.out.println();
+        }
+    }
 }

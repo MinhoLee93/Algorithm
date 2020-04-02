@@ -8,144 +8,144 @@ import java.util.List;
 import java.util.StringTokenizer;
 
 public class boj_14502 {
-	static int[] dx = { 1, 0, -1, 0 };
-	static int[] dy = { 0, 1, 0, -1 };
-	static int Max = 0;
+    static int[] dx = {1, 0, -1, 0};
+    static int[] dy = {0, 1, 0, -1};
+    static int Max = 0;
 
-	static int N;
-	static int M;
-	static int[][] arr;
-	static List<Node> node = new ArrayList<Node>();
+    static int N;
+    static int M;
+    static int[][] arr;
+    static List<Node> node = new ArrayList<Node>();
 
-	public static void main(String[] args) throws IOException {
-		BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
-		StringTokenizer st;
+    public static void main(String[] args) throws IOException {
+        BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st;
 
-		st = new StringTokenizer(bf.readLine());
+        st = new StringTokenizer(bf.readLine());
 
-		N = Integer.parseInt(st.nextToken());
-		M = Integer.parseInt(st.nextToken());
-		arr = new int[N][M];
+        N = Integer.parseInt(st.nextToken());
+        M = Integer.parseInt(st.nextToken());
+        arr = new int[N][M];
 
-		for (int i = 0; i < N; i++) {
-			st = new StringTokenizer(bf.readLine());
-			for (int j = 0; j < M; j++) {
-				arr[i][j] = Integer.parseInt(st.nextToken());
-				// ±âÁ¸ ¹ÙÀÌ·¯½º ÀÖ´Â°÷ ±â¾ï
-				if (arr[i][j] == 2) {
-					node.add(new Node(i, j));
-				}
-			}
-		}
+        for (int i = 0; i < N; i++) {
+            st = new StringTokenizer(bf.readLine());
+            for (int j = 0; j < M; j++) {
+                arr[i][j] = Integer.parseInt(st.nextToken());
+                // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ì·ï¿½ï¿½ï¿½ ï¿½Ö´Â°ï¿½ ï¿½ï¿½ï¿½
+                if (arr[i][j] == 2) {
+                    node.add(new Node(i, j));
+                }
+            }
+        }
 
-		// º® ¼¼¿ì±â
-		makeWall(0, 0, 0);
-		System.out.println(Max);
-	}
+        // ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½
+        makeWall(0, 0, 0);
+        System.out.println(Max);
+    }
 
-	static class Node {
-		int x;
-		int y;
+    static class Node {
+        int x;
+        int y;
 
-		Node(int x, int y) {
-			this.x = x;
-			this.y = y;
-		}
-	}
+        Node(int x, int y) {
+            this.x = x;
+            this.y = y;
+        }
+    }
 
-	static boolean safe(int x, int y) {
-		return (x >= 0) && (y >= 0) && (x < N) && (y < M);
-	}
+    static boolean safe(int x, int y) {
+        return (x >= 0) && (y >= 0) && (x < N) && (y < M);
+    }
 
-	static void makeWall(int x, int y, int cnt) {
+    static void makeWall(int x, int y, int cnt) {
 
-		if (cnt == 3) {
-			int[][] makedWall = copy(arr);
+        if (cnt == 3) {
+            int[][] makedWall = copy(arr);
 
-			int xx = 0;
-			int yy = 0;
+            int xx = 0;
+            int yy = 0;
 
-			// ¹ÙÀÌ·¯½º ÀÖ´Â°÷ -> ÆÛÆ®¸®±â
-			for (Node n : node) {
-				xx = n.x;
-				yy = n.y;
+            // ï¿½ï¿½ï¿½Ì·ï¿½ï¿½ï¿½ ï¿½Ö´Â°ï¿½ -> ï¿½ï¿½Æ®ï¿½ï¿½ï¿½ï¿½
+            for (Node n : node) {
+                xx = n.x;
+                yy = n.y;
 
-				spreadVirus(xx, yy, makedWall);
-			}
+                spreadVirus(xx, yy, makedWall);
+            }
 
-			int temp = checkNoVirus(makedWall);
-			if (temp > Max) {
-				Max = temp;
-				//printArr(makedWall);
-			}
-			
-			return;
-		}
+            int temp = checkNoVirus(makedWall);
+            if (temp > Max) {
+                Max = temp;
+                //printArr(makedWall);
+            }
 
-		for (int i = x; i < N; i++) {
-			for (int j = y; j < M; j++) {
-				if (arr[i][j] == 0) {
-					arr[i][j] = 1;
-					makeWall(i, j, cnt + 1);
-					arr[i][j] = 0;
-				}
-			}
-			y = 0;
-		}
-	}
+            return;
+        }
 
-	static int[][] copy(int[][] arr) {
+        for (int i = x; i < N; i++) {
+            for (int j = y; j < M; j++) {
+                if (arr[i][j] == 0) {
+                    arr[i][j] = 1;
+                    makeWall(i, j, cnt + 1);
+                    arr[i][j] = 0;
+                }
+            }
+            y = 0;
+        }
+    }
 
-		int[][] temp = new int[N][M];
+    static int[][] copy(int[][] arr) {
 
-		for (int i = 0; i < N; i++) {
-			for (int j = 0; j < M; j++) {
-				temp[i][j] = arr[i][j];
-			}
-		}
+        int[][] temp = new int[N][M];
 
-		return temp;
-	}
+        for (int i = 0; i < N; i++) {
+            for (int j = 0; j < M; j++) {
+                temp[i][j] = arr[i][j];
+            }
+        }
 
-	static void spreadVirus(int x, int y, int[][] arr) {
-		// printArr(arr);
+        return temp;
+    }
 
-		for (int i = 0; i < 4; i++) {
-			if (safe(x + dx[i], y + dy[i]) && arr[x + dx[i]][y + dy[i]] == 0) {
-				arr[x + dx[i]][y + dy[i]] = 2;
-				spreadVirus(x+dx[i], y+dy[i], arr);
-			}
-		}
+    static void spreadVirus(int x, int y, int[][] arr) {
+        // printArr(arr);
 
-	}
+        for (int i = 0; i < 4; i++) {
+            if (safe(x + dx[i], y + dy[i]) && arr[x + dx[i]][y + dy[i]] == 0) {
+                arr[x + dx[i]][y + dy[i]] = 2;
+                spreadVirus(x + dx[i], y + dy[i], arr);
+            }
+        }
 
-	static void printArr(int[][] arr) {
+    }
 
-		for (int i = 0; i < N; i++) {
-			for (int j = 0; j < M; j++) {
-				System.out.print(arr[i][j] + " ");
-			}
-			System.out.println();
-		}
-		System.out.println("------------------");
-	}
+    static void printArr(int[][] arr) {
 
-	// ¾ÈÀü¿µ¿ª °¹¼ö ±¸ÇÏ±â
-	static int checkNoVirus(int[][] arr) {
-		int temp = 0;
+        for (int i = 0; i < N; i++) {
+            for (int j = 0; j < M; j++) {
+                System.out.print(arr[i][j] + " ");
+            }
+            System.out.println();
+        }
+        System.out.println("------------------");
+    }
 
-		for (int i = 0; i < N; i++) {
-			for (int j = 0; j < M; j++) {
-				if (arr[i][j] == 0) {
-					temp++;
-				}
-			}
-		}
+    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ï±ï¿½
+    static int checkNoVirus(int[][] arr) {
+        int temp = 0;
 
-		return temp;
-	}
+        for (int i = 0; i < N; i++) {
+            for (int j = 0; j < M; j++) {
+                if (arr[i][j] == 0) {
+                    temp++;
+                }
+            }
+        }
 
-	// º®¼¼¿ì±â
+        return temp;
+    }
 
-	// ¹ÙÀÌ·¯½º ÆÛÆ®¸®±â
+    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+
+    // ï¿½ï¿½ï¿½Ì·ï¿½ï¿½ï¿½ ï¿½ï¿½Æ®ï¿½ï¿½ï¿½ï¿½
 }

@@ -8,32 +8,32 @@ class Solution {
     public int largestRectangleArea(int[] heights) {
         int N = heights.length;
         int MAX = 0;
-        
-		for (int i = 0; i < N; i++) {
-			int temp = heights[i];
-			// ¿Þ
-			for (int left = 1; i - left >= 0; left++) {
-				if (heights[i - left] < heights[i]) {
-					break;
-				} else {
-					temp += heights[i];
-				}
-			}
 
-			// ¿À
-			for (int right = 1; i + right < N; right++) {
-				if (heights[i + right] < heights[i]) {
-					break;
-				} else {
-					temp += heights[i];
-				}
-			}
+        for (int i = 0; i < N; i++) {
+            int temp = heights[i];
+            // ï¿½ï¿½
+            for (int left = 1; i - left >= 0; left++) {
+                if (heights[i - left] < heights[i]) {
+                    break;
+                } else {
+                    temp += heights[i];
+                }
+            }
 
-			if (temp > MAX) {
-				MAX = temp;
-			}
-		}
-		
-		return MAX;
+            // ï¿½ï¿½
+            for (int right = 1; i + right < N; right++) {
+                if (heights[i + right] < heights[i]) {
+                    break;
+                } else {
+                    temp += heights[i];
+                }
+            }
+
+            if (temp > MAX) {
+                MAX = temp;
+            }
+        }
+
+        return MAX;
     }
 }

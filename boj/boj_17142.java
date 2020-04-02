@@ -9,207 +9,207 @@ import java.util.StringTokenizer;
 
 public class N2 {
 
-	static int N;
-	static int M;
-	static int[][] arr;
-	static int[] dx = { 1, 0, -1, 0 };
-	static int[] dy = { 0, 1, 0, -1 };
-	static int Result;
+    static int N;
+    static int M;
+    static int[][] arr;
+    static int[] dx = {1, 0, -1, 0};
+    static int[] dy = {0, 1, 0, -1};
+    static int Result;
 
-	static Virus[] virus;
-	static int vIndex;
+    static Virus[] virus;
+    static int vIndex;
 
-	static Virus[] selected;
-	static int sIndex;
+    static Virus[] selected;
+    static int sIndex;
 
-	static int MIN = Integer.MAX_VALUE;
+    static int MIN = Integer.MAX_VALUE;
 
-	static int zeroCnt;
+    static int zeroCnt;
 
-	public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException {
 
-		BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
-		StringTokenizer st;
-		st = new StringTokenizer(bf.readLine());
+        BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st;
+        st = new StringTokenizer(bf.readLine());
 
-		N = Integer.parseInt(st.nextToken());
-		M = Integer.parseInt(st.nextToken());
+        N = Integer.parseInt(st.nextToken());
+        M = Integer.parseInt(st.nextToken());
 
-		arr = new int[N][N];
-		virus = new Virus[10];
-		selected = new Virus[M];
-		for (int i = 0; i < N; i++) {
-			st = new StringTokenizer(bf.readLine());
-			for (int j = 0; j < N; j++) {
-				int k = Integer.parseInt(st.nextToken());
-				arr[i][j] = k;
-				// ¹ÙÀÌ·¯½º ÀÎ°æ¿ì
-				if (k == 2) {
-					virus[vIndex++] = new Virus(i, j);
-				}
+        arr = new int[N][N];
+        virus = new Virus[10];
+        selected = new Virus[M];
+        for (int i = 0; i < N; i++) {
+            st = new StringTokenizer(bf.readLine());
+            for (int j = 0; j < N; j++) {
+                int k = Integer.parseInt(st.nextToken());
+                arr[i][j] = k;
+                // ï¿½ï¿½ï¿½Ì·ï¿½ï¿½ï¿½ ï¿½Î°ï¿½ï¿½
+                if (k == 2) {
+                    virus[vIndex++] = new Virus(i, j);
+                }
 
-				if (k == 0) {
-					zeroCnt++;
-				}
-			}
-		}
+                if (k == 0) {
+                    zeroCnt++;
+                }
+            }
+        }
 
-		pick(0, 0);
-		if (MIN == Integer.MAX_VALUE) {
-			System.out.println(-1);
-		} else {
-			System.out.println(MIN);
-		}
+        pick(0, 0);
+        if (MIN == Integer.MAX_VALUE) {
+            System.out.println(-1);
+        } else {
+            System.out.println(MIN);
+        }
 
-		bf.close();
-	}
+        bf.close();
+    }
 
-	static void pick(int index, int cnt) {
+    static void pick(int index, int cnt) {
 
-		// M°³ÀÇ À§Ä¡¼±ÅÃÇÑ °æ¿ì
-		if (cnt == M) {
-			// System.out.println("¼±ÅÃ¿Ï·á");
-			int[][] picked = copy(arr);
-			// ¹ÙÀÌ·¯½º ÆÛÁö±â
-			spread(picked);
-			return;
-		}
+        // Mï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
+        if (cnt == M) {
+            // System.out.println("ï¿½ï¿½ï¿½Ã¿Ï·ï¿½");
+            int[][] picked = copy(arr);
+            // ï¿½ï¿½ï¿½Ì·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+            spread(picked);
+            return;
+        }
 
-		// virusÀÇ Index¸¦ ¹þ¾î³­°æ¿ì
-		if (index == vIndex) {
-			return;
-		}
+        // virusï¿½ï¿½ Indexï¿½ï¿½ ï¿½ï¿½ï¿½î³­ï¿½ï¿½ï¿½
+        if (index == vIndex) {
+            return;
+        }
 
-		Virus v = virus[index];
-		selected[sIndex++] = v;
-		// ÇØ´çÀ§Ä¡ ¼±ÅÃ
-		pick(index + 1, cnt + 1);
+        Virus v = virus[index];
+        selected[sIndex++] = v;
+        // ï¿½Ø´ï¿½ï¿½ï¿½Ä¡ ï¿½ï¿½ï¿½ï¿½
+        pick(index + 1, cnt + 1);
 
-		// ÇØ´çÀ§Ä¡ ¹Ì¼±ÅÃ
-		selected[--sIndex] = null;
-		pick(index + 1, cnt);
-	}
+        // ï¿½Ø´ï¿½ï¿½ï¿½Ä¡ ï¿½Ì¼ï¿½ï¿½ï¿½
+        selected[--sIndex] = null;
+        pick(index + 1, cnt);
+    }
 
-	static void spread(int[][] arr) {
+    static void spread(int[][] arr) {
 
-		// printSelected();
-		// ¸ðµç ºóÄ­ ¹ÙÀÌ·¯½º ÆÛÁ³´ÂÁö È®ÀÎ
-		if (check(arr)) {
-			MIN = 0;
-			return;
-		}
+        // printSelected();
+        // ï¿½ï¿½ï¿½ ï¿½ï¿½Ä­ ï¿½ï¿½ï¿½Ì·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ È®ï¿½ï¿½
+        if (check(arr)) {
+            MIN = 0;
+            return;
+        }
 
-		// ÀÌ¹Ì ÆÛÁø°÷ Ã¼Å©
-		int[][] check = new int[N][N];
-		Queue<Virus> queue = new LinkedList<Virus>();
-		for (int i = 0; i < M; i++) {
-			Virus v = selected[i];
-			queue.add(v);
-			arr[v.x][v.y] = 3;
-			check[v.x][v.y] = 1;
-		}
-		//System.out.println("ÆÛÁö±âÀü");
-		//print(arr);
-		
-		int cnt = 0;
-		int zCnt = 0;
-		while (!queue.isEmpty()) {
-			Virus t = queue.poll();
-			int x = t.x;
-			int y = t.y;
+        // ï¿½Ì¹ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã¼Å©
+        int[][] check = new int[N][N];
+        Queue<Virus> queue = new LinkedList<Virus>();
+        for (int i = 0; i < M; i++) {
+            Virus v = selected[i];
+            queue.add(v);
+            arr[v.x][v.y] = 3;
+            check[v.x][v.y] = 1;
+        }
+        //System.out.println("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
+        //print(arr);
 
-			//System.out.println(zCnt  + " ¾ø¾Ú , " + t.cnt);
-			if (t.cnt > MIN) {
-				break;
-			}
+        int cnt = 0;
+        int zCnt = 0;
+        while (!queue.isEmpty()) {
+            Virus t = queue.poll();
+            int x = t.x;
+            int y = t.y;
 
-			if (zCnt == zeroCnt) {
-				break;
-			}
+            //System.out.println(zCnt  + " ï¿½ï¿½ï¿½ï¿½ , " + t.cnt);
+            if (t.cnt > MIN) {
+                break;
+            }
 
-			for (int i = 0; i < 4; i++) {
-				if (safe(x + dx[i], y + dy[i]) && check[x + dx[i]][y + dy[i]] == 0
-						&& (arr[x + dx[i]][y + dy[i]] == 0 || arr[x + dx[i]][y + dy[i]] == 2)) {
-					Virus ve = new Virus(x + dx[i], y + dy[i]);
-					ve.cnt = t.cnt + 1;
-					// ÃÖÁ¾½Ã°£ °»½Å
-					cnt = ve.cnt;
-					// ºóÄ­ÀÌ¿´À» °æ¿ì
-					if (arr[x + dx[i]][y + dy[i]] == 0) {
-						zCnt++;
-					}
-					arr[x + dx[i]][y + dy[i]] = 3;
-					check[x + dx[i]][y + dy[i]] = 1;
-					queue.add(ve);
+            if (zCnt == zeroCnt) {
+                break;
+            }
+
+            for (int i = 0; i < 4; i++) {
+                if (safe(x + dx[i], y + dy[i]) && check[x + dx[i]][y + dy[i]] == 0
+                        && (arr[x + dx[i]][y + dy[i]] == 0 || arr[x + dx[i]][y + dy[i]] == 2)) {
+                    Virus ve = new Virus(x + dx[i], y + dy[i]);
+                    ve.cnt = t.cnt + 1;
+                    // ï¿½ï¿½ï¿½ï¿½ï¿½Ã°ï¿½ ï¿½ï¿½ï¿½ï¿½
+                    cnt = ve.cnt;
+                    // ï¿½ï¿½Ä­ï¿½Ì¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
+                    if (arr[x + dx[i]][y + dy[i]] == 0) {
+                        zCnt++;
+                    }
+                    arr[x + dx[i]][y + dy[i]] = 3;
+                    check[x + dx[i]][y + dy[i]] = 1;
+                    queue.add(ve);
 
 
-				}
-			}
-		}
-		//System.out.println("ÆÛÁøÈÄ");
-		//print(arr);
-		//System.out.println("Ä«¿îÆ® : " + cnt);
-		
-		if(check(arr)) {
-			if (cnt < MIN) {
-				MIN = cnt;
-			}
-		}
-	}
+                }
+            }
+        }
+        //System.out.println("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
+        //print(arr);
+        //System.out.println("Ä«ï¿½ï¿½Æ® : " + cnt);
 
-	static boolean check(int[][] arr) {
+        if (check(arr)) {
+            if (cnt < MIN) {
+                MIN = cnt;
+            }
+        }
+    }
 
-		for (int i = 0; i < N; i++) {
-			for (int j = 0; j < N; j++) {
-				if (arr[i][j] == 0) {
-					return false;
-				}
-			}
-		}
-		return true;
-	}
+    static boolean check(int[][] arr) {
 
-	static void printSelected() {
-		for (int i = 0; i < M; i++) {
-			System.out.println(selected[i].x + "," + selected[i].y);
-		}
-	}
+        for (int i = 0; i < N; i++) {
+            for (int j = 0; j < N; j++) {
+                if (arr[i][j] == 0) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
 
-	static int[][] copy(int[][] arr) {
+    static void printSelected() {
+        for (int i = 0; i < M; i++) {
+            System.out.println(selected[i].x + "," + selected[i].y);
+        }
+    }
 
-		int[][] temp = new int[N][N];
+    static int[][] copy(int[][] arr) {
 
-		for (int i = 0; i < N; i++) {
-			for (int j = 0; j < N; j++) {
-				temp[i][j] = arr[i][j];
-			}
-		}
+        int[][] temp = new int[N][N];
 
-		return temp;
-	}
+        for (int i = 0; i < N; i++) {
+            for (int j = 0; j < N; j++) {
+                temp[i][j] = arr[i][j];
+            }
+        }
 
-	static class Virus {
-		int x;
-		int y;
-		int cnt;
+        return temp;
+    }
 
-		Virus(int x, int y) {
-			this.x = x;
-			this.y = y;
-		}
-	}
+    static class Virus {
+        int x;
+        int y;
+        int cnt;
 
-	static boolean safe(int x, int y) {
-		return (x >= 0) && (y >= 0) && (x < N) && (y < N);
-	}
+        Virus(int x, int y) {
+            this.x = x;
+            this.y = y;
+        }
+    }
 
-	static void print(int[][] arr) {
-		for (int i = 0; i < N; i++) {
-			for (int j = 0; j < N; j++) {
-				System.out.print(arr[i][j] + " ");
-			}
-			System.out.println();
-		}
-		System.out.println("---------------");
-	}
+    static boolean safe(int x, int y) {
+        return (x >= 0) && (y >= 0) && (x < N) && (y < N);
+    }
+
+    static void print(int[][] arr) {
+        for (int i = 0; i < N; i++) {
+            for (int j = 0; j < N; j++) {
+                System.out.print(arr[i][j] + " ");
+            }
+            System.out.println();
+        }
+        System.out.println("---------------");
+    }
 }

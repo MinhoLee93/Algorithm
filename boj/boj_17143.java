@@ -7,155 +7,155 @@ import java.util.StringTokenizer;
 
 public class N2 {
 
-	static int R;
-	static int C;
-	static int M;
+    static int R;
+    static int C;
+    static int M;
 
-	static Shark[][] arr;
-	static int Result;
+    static Shark[][] arr;
+    static int Result;
 
-	static int[] dx = { 0, -1, 1, 0, 0 };
-	static int[] dy = { 0, 0, 0, 1, -1 };
+    static int[] dx = {0, -1, 1, 0, 0};
+    static int[] dy = {0, 0, 0, 1, -1};
 
-	public static void main(String[] args) throws IOException {
-		BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
-		StringTokenizer st;
+    public static void main(String[] args) throws IOException {
+        BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st;
 
-		st = new StringTokenizer(bf.readLine());
-		R = Integer.parseInt(st.nextToken());
-		C = Integer.parseInt(st.nextToken());
-		M = Integer.parseInt(st.nextToken());
+        st = new StringTokenizer(bf.readLine());
+        R = Integer.parseInt(st.nextToken());
+        C = Integer.parseInt(st.nextToken());
+        M = Integer.parseInt(st.nextToken());
 
-		arr = new Shark[R][C];
-		for (int i = 0; i < M; i++) {
-			st = new StringTokenizer(bf.readLine());
+        arr = new Shark[R][C];
+        for (int i = 0; i < M; i++) {
+            st = new StringTokenizer(bf.readLine());
 
-			int r = Integer.parseInt(st.nextToken());
-			int c = Integer.parseInt(st.nextToken());
-			int s = Integer.parseInt(st.nextToken());
-			int d = Integer.parseInt(st.nextToken());
-			int z = Integer.parseInt(st.nextToken());
+            int r = Integer.parseInt(st.nextToken());
+            int c = Integer.parseInt(st.nextToken());
+            int s = Integer.parseInt(st.nextToken());
+            int d = Integer.parseInt(st.nextToken());
+            int z = Integer.parseInt(st.nextToken());
 
-			Shark shark = new Shark(r - 1, c - 1, s, d, z);
+            Shark shark = new Shark(r - 1, c - 1, s, d, z);
 
-			arr[r - 1][c - 1] = shark;
-		}
+            arr[r - 1][c - 1] = shark;
+        }
 
-		solve();
-		System.out.println(Result);
+        solve();
+        System.out.println(Result);
 
-		bf.close();
-	}
+        bf.close();
+    }
 
-	public static void solve() {
+    public static void solve() {
 
-		for (int j = 0; j < C; j++) {
+        for (int j = 0; j < C; j++) {
 
-			for (int i = 0; i < R; i++) {
-				// ¶¥¿¡¼­°¡Àå °¡±î¿î »ó¾î Àâ±â
-				if (arr[i][j] != null) {
-					//System.out.println(i + "," + j);
-					Result += arr[i][j].z;
-					arr[i][j] = null;
-					break;
-				}
-			}
+            for (int i = 0; i < R; i++) {
+                // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
+                if (arr[i][j] != null) {
+                    //System.out.println(i + "," + j);
+                    Result += arr[i][j].z;
+                    arr[i][j] = null;
+                    break;
+                }
+            }
 
-			arr = move();
-		}
-	}
+            arr = move();
+        }
+    }
 
-	public static boolean safe(int x, int y) {
-		return (x >= 0) && (y >= 0) && (x < R) && (y < C);
-	}
+    public static boolean safe(int x, int y) {
+        return (x >= 0) && (y >= 0) && (x < R) && (y < C);
+    }
 
-	public static Shark[][] move() {
+    public static Shark[][] move() {
 
-		// ÀÌµ¿ÈÄ »ó¾î
-		Shark[][] temp = new Shark[R][C];
+        // ï¿½Ìµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
+        Shark[][] temp = new Shark[R][C];
 
-		for (int i = 0; i < R; i++) {
-			for (int j = 0; j < C; j++) {
-				// »ó¾î°¡ ÀÖ´Ù¸é
-				if (arr[i][j] != null) {
+        for (int i = 0; i < R; i++) {
+            for (int j = 0; j < C; j++) {
+                // ï¿½ï¿½î°¡ ï¿½Ö´Ù¸ï¿½
+                if (arr[i][j] != null) {
 
-					// ÇöÀç »ó¾î x,y ÁÂÇ¥
-					int r = arr[i][j].r;
-					int c = arr[i][j].c;
-					int s = arr[i][j].s;
-					int d = arr[i][j].d;
-					int z = arr[i][j].z;
+                    // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ x,y ï¿½ï¿½Ç¥
+                    int r = arr[i][j].r;
+                    int c = arr[i][j].c;
+                    int s = arr[i][j].s;
+                    int d = arr[i][j].d;
+                    int z = arr[i][j].z;
 
-					//System.out.println(" ÀÌµ¿Àü : " + r + "," + c + ", ¹æÇâ: " + d);
-					for (int k = 0; k < s; k++) {
-						if (safe(r + dx[d], c + dy[d])) {
-							r = r + dx[d];
-							c = c + dy[d];
-							//System.out.println("¹æÇâ : " + d);
-						} else {
-							switch (d) {
-							case 1:
-								d = 2;
-								k = k -1;
-								break;
-							case 2:
-								d = 1;
-								k = k -1;
-								break;
-							case 3:
-								d = 4;
-								k = k -1;
-								break;
-							case 4:
-								d = 3;
-								k = k -1;
-								break;
-							}
-						}
-					}
+                    //System.out.println(" ï¿½Ìµï¿½ï¿½ï¿½ : " + r + "," + c + ", ï¿½ï¿½ï¿½ï¿½: " + d);
+                    for (int k = 0; k < s; k++) {
+                        if (safe(r + dx[d], c + dy[d])) {
+                            r = r + dx[d];
+                            c = c + dy[d];
+                            //System.out.println("ï¿½ï¿½ï¿½ï¿½ : " + d);
+                        } else {
+                            switch (d) {
+                                case 1:
+                                    d = 2;
+                                    k = k - 1;
+                                    break;
+                                case 2:
+                                    d = 1;
+                                    k = k - 1;
+                                    break;
+                                case 3:
+                                    d = 4;
+                                    k = k - 1;
+                                    break;
+                                case 4:
+                                    d = 3;
+                                    k = k - 1;
+                                    break;
+                            }
+                        }
+                    }
 
-					//System.out.println(" ÀÌµ¿ÈÄ: " + r + "," + c + ", ¹æÇâ: " + d);
+                    //System.out.println(" ï¿½Ìµï¿½ï¿½ï¿½: " + r + "," + c + ", ï¿½ï¿½ï¿½ï¿½: " + d);
 
-					
-					// ÇöÀç ºñ¾îÀÖ´Ù¸é
-					if (temp[r][c] == null) {
-						temp[r][c] = new Shark(r, c, s, d, z);
-					} else {
-						// »õ·Î¿î »ó¾î°¡ ´õ Å¬°æ¿ì¿¡¸¸ ÇØ´ç ÀÚ¸® Â÷Áö
-						if (temp[r][c].z < z) {
-							temp[r][c] = new Shark(r, c, s, d, z);
-						}
-					}
-				}
-			}
-		}
 
-		return temp;
-	}
+                    // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ö´Ù¸ï¿½
+                    if (temp[r][c] == null) {
+                        temp[r][c] = new Shark(r, c, s, d, z);
+                    } else {
+                        // ï¿½ï¿½ï¿½Î¿ï¿½ ï¿½ï¿½î°¡ ï¿½ï¿½ Å¬ï¿½ï¿½ì¿¡ï¿½ï¿½ ï¿½Ø´ï¿½ ï¿½Ú¸ï¿½ ï¿½ï¿½ï¿½ï¿½
+                        if (temp[r][c].z < z) {
+                            temp[r][c] = new Shark(r, c, s, d, z);
+                        }
+                    }
+                }
+            }
+        }
 
-	public static void print() {
-		for (int i = 0; i < R; i++) {
-			for (int j = 0; j < C; j++) {
-				System.out.print(arr[i][j].z + " ");
-			}
-			System.out.println();
-		}
-		System.out.println("------------------");
-	}
+        return temp;
+    }
 
-	public static class Shark {
-		int r;
-		int c;
-		int s;
-		int d;
-		int z;
+    public static void print() {
+        for (int i = 0; i < R; i++) {
+            for (int j = 0; j < C; j++) {
+                System.out.print(arr[i][j].z + " ");
+            }
+            System.out.println();
+        }
+        System.out.println("------------------");
+    }
 
-		Shark(int r, int c, int s, int d, int z) {
-			this.r = r;
-			this.c = c;
-			this.s = s;
-			this.d = d;
-			this.z = z;
-		}
-	}
+    public static class Shark {
+        int r;
+        int c;
+        int s;
+        int d;
+        int z;
+
+        Shark(int r, int c, int s, int d, int z) {
+            this.r = r;
+            this.c = c;
+            this.s = s;
+            this.d = d;
+            this.z = z;
+        }
+    }
 }

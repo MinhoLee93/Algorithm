@@ -1,34 +1,34 @@
 class Solution {
     public int findRadius(int[] houses, int[] heaters) {
-       if (houses.length == 0 || heaters.length == 0) {
-			return 0;
-		}
+        if (houses.length == 0 || heaters.length == 0) {
+            return 0;
+        }
 
-		int min = Integer.MIN_VALUE;
-		// binary search ¸¦ »ç¿ëÇÏ±â À§ÇØ¼­´Â target array´Â sortingÀÌ µÇ¾î¾ß ÇÑ´Ù.
-		Arrays.sort(heaters);
+        int min = Integer.MIN_VALUE;
+        // binary search ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ï±ï¿½ ï¿½ï¿½ï¿½Ø¼ï¿½ï¿½ï¿½ target arrayï¿½ï¿½ sortingï¿½ï¿½ ï¿½Ç¾ï¿½ï¿½ ï¿½Ñ´ï¿½.
+        Arrays.sort(heaters);
 
-		for (int i = 0; i < houses.length; i++) {
-			int target = houses[i];
-			int pos = Arrays.binarySearch(heaters, target);
+        for (int i = 0; i < houses.length; i++) {
+            int target = houses[i];
+            int pos = Arrays.binarySearch(heaters, target);
 
-			// target does not exist / -(InsertionPoint) -1
-			if (pos < 0) {
-				// real position
-				pos = -pos - 1;
-			}
+            // target does not exist / -(InsertionPoint) -1
+            if (pos < 0) {
+                // real position
+                pos = -pos - 1;
+            }
 
-			// house <= target
-			if (pos == 0) {
-				min = Math.max(min, heaters[0] - target);
-			} else if (pos >= heaters.length) {
-				// house > target
-				min = Math.max(min, target - heaters[heaters.length - 1]);
-			} else {
-				min = Math.max(min, Math.min(target - heaters[pos - 1], heaters[pos] - target));
-			}
-		}
+            // house <= target
+            if (pos == 0) {
+                min = Math.max(min, heaters[0] - target);
+            } else if (pos >= heaters.length) {
+                // house > target
+                min = Math.max(min, target - heaters[heaters.length - 1]);
+            } else {
+                min = Math.max(min, Math.min(target - heaters[pos - 1], heaters[pos] - target));
+            }
+        }
 
-		return min;
+        return min;
     }
 }

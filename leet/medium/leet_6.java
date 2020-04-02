@@ -1,48 +1,48 @@
 class Solution {
     public String convert(String s, int numRows) {
-        if(numRows==1){
+        if (numRows == 1) {
             return s;
         }
-        
-        
+
+
         List<StringBuilder> arr = new ArrayList<>();
-		// add empty stringbuilder
-		for (int i = 0; i < numRows; i++) {
-			arr.add(new StringBuilder());
-		}
+        // add empty stringbuilder
+        for (int i = 0; i < numRows; i++) {
+            arr.add(new StringBuilder());
+        }
 
-		int cnt = 0;
-		int index = 0;
-		boolean flag = true;
-		while (cnt < s.length()) {
-			String temp = s.substring(cnt, cnt + 1);
-			//System.out.println("index : " + index + " , temp : " + temp);
-			arr.get(index).append(temp);
-			cnt++;
-			// + ¹æÇâ
-			if (flag) {
-				if (index < numRows - 1) {
-					index++;
-				} else {
-					flag = false;
-					index--;
-				}
-				// - ¹æÇâ
-			} else {
-				if (index > 0) {
-					index--;
-				} else {
-					flag = true;
-					index++;
-				}
-			}
-		}
+        int cnt = 0;
+        int index = 0;
+        boolean flag = true;
+        while (cnt < s.length()) {
+            String temp = s.substring(cnt, cnt + 1);
+            //System.out.println("index : " + index + " , temp : " + temp);
+            arr.get(index).append(temp);
+            cnt++;
+            // + ï¿½ï¿½ï¿½ï¿½
+            if (flag) {
+                if (index < numRows - 1) {
+                    index++;
+                } else {
+                    flag = false;
+                    index--;
+                }
+                // - ï¿½ï¿½ï¿½ï¿½
+            } else {
+                if (index > 0) {
+                    index--;
+                } else {
+                    flag = true;
+                    index++;
+                }
+            }
+        }
 
-		StringBuilder result = new StringBuilder();
-		for (int i = 0; i < arr.size(); i++) {
-			result.append(arr.get(i).toString());
-		}
+        StringBuilder result = new StringBuilder();
+        for (int i = 0; i < arr.size(); i++) {
+            result.append(arr.get(i).toString());
+        }
 
-		return result.toString();
+        return result.toString();
     }
 }

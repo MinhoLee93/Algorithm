@@ -11,258 +11,258 @@ import java.util.StringTokenizer;
 
 public class N1 {
 
-	static int r;
-	static int c;
-	static int k;
+    static int r;
+    static int c;
+    static int k;
 
-	// Çà
-	static int xIndex = 3;
-	// ¿­
-	static int yIndex = 3;
+    // ï¿½ï¿½
+    static int xIndex = 3;
+    // ï¿½ï¿½
+    static int yIndex = 3;
 
-	static int[][] arr = new int[100][100];
-	static int Result;
+    static int[][] arr = new int[100][100];
+    static int Result;
 
-	public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException {
 
-		BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
-		StringTokenizer st;
-		st = new StringTokenizer(bf.readLine());
-		r = (Integer.parseInt(st.nextToken()) - 1);
-		c = (Integer.parseInt(st.nextToken()) - 1);
-		k = Integer.parseInt(st.nextToken());
+        BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st;
+        st = new StringTokenizer(bf.readLine());
+        r = (Integer.parseInt(st.nextToken()) - 1);
+        c = (Integer.parseInt(st.nextToken()) - 1);
+        k = Integer.parseInt(st.nextToken());
 
-		for (int i = 0; i < 3; i++) {
-			st = new StringTokenizer(bf.readLine());
-			for (int j = 0; j < 3; j++) {
-				arr[i][j] = Integer.parseInt(st.nextToken());
-			}
-		}
-		// print(arr);
-		solve(0, arr);
-		System.out.println(Result);
-		bf.close();
-	}
+        for (int i = 0; i < 3; i++) {
+            st = new StringTokenizer(bf.readLine());
+            for (int j = 0; j < 3; j++) {
+                arr[i][j] = Integer.parseInt(st.nextToken());
+            }
+        }
+        // print(arr);
+        solve(0, arr);
+        System.out.println(Result);
+        bf.close();
+    }
 
-	static void solve(int cnt, int[][] arr) {
+    static void solve(int cnt, int[][] arr) {
 
-		if (arr[r][c] == k) {
-			Result = cnt;
-			return;
-		}
+        if (arr[r][c] == k) {
+            Result = cnt;
+            return;
+        }
 
-		if (cnt > 100) {
-			Result = -1;
-			return;
-		}
+        if (cnt > 100) {
+            Result = -1;
+            return;
+        }
 
-		// ÇàÀÇ °¹¼ö >= ¿­ÀÇ °¹¼ö
-		if (xIndex >= yIndex) {
-			// ¿À¸¥ÂÊ ¹æÇâ
-			//System.out.println("R¿¬»ê");
-			int[][] r = RSolve(arr);
-			solve(cnt + 1, r);
-		} else {
-			// ÇàÀÇ °¹¼ö < ¿­ÀÇ°¹¼ö
-			//System.out.println("C¿¬»ê");
-			int[][] c = CSolve(arr);
-			// ¾Æ·¡¹æÇâ
-			solve(cnt + 1, c);
-		}
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ >= ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+        if (xIndex >= yIndex) {
+            // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+            //System.out.println("Rï¿½ï¿½ï¿½ï¿½");
+            int[][] r = RSolve(arr);
+            solve(cnt + 1, r);
+        } else {
+            // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ < ï¿½ï¿½ï¿½Ç°ï¿½ï¿½ï¿½
+            //System.out.println("Cï¿½ï¿½ï¿½ï¿½");
+            int[][] c = CSolve(arr);
+            // ï¿½Æ·ï¿½ï¿½ï¿½ï¿½ï¿½
+            solve(cnt + 1, c);
+        }
 
-	}
+    }
 
-	static int[][] copy(int[][] arr) {
-		int[][] temp = new int[100][100];
+    static int[][] copy(int[][] arr) {
+        int[][] temp = new int[100][100];
 
-		for (int i = 0; i < 100; i++) {
-			for (int j = 0; j < 100; j++) {
-				temp[i][j] = arr[i][j];
-			}
-		}
+        for (int i = 0; i < 100; i++) {
+            for (int j = 0; j < 100; j++) {
+                temp[i][j] = arr[i][j];
+            }
+        }
 
-		return temp;
-	}
+        return temp;
+    }
 
-	// 1: r / 2: c
-	static int[][] RSolve(int[][] arr) {
-		//print(arr);
+    // 1: r / 2: c
+    static int[][] RSolve(int[][] arr) {
+        //print(arr);
 
-		int[][] temp = new int[100][100];
-		int max = 0;
-		for (int i = 0; i < xIndex; i++) {
-			//System.out.println("row : " + i);
-			// »õ·Î¿î arr index
-			int index = 0;
+        int[][] temp = new int[100][100];
+        int max = 0;
+        for (int i = 0; i < xIndex; i++) {
+            //System.out.println("row : " + i);
+            // ï¿½ï¿½ï¿½Î¿ï¿½ arr index
+            int index = 0;
 
-			Map<Integer, Integer> map = new HashMap<>();
-			// Ä«¿îÆ® ÇÏ°í
-			for (int j = 0; j < yIndex; j++) {
-				// ¼ýÀÚ
-				int t = arr[i][j];
-				// ÀÌ¹Ì ÀÖ´Ù¸é?
-				if (t != 0) {
-					if (map.containsKey(t)) {
-						map.replace(t, map.get(t) + 1);
-					} else {
-						map.put(t, 1);
-					}
-				}
-			}
+            Map<Integer, Integer> map = new HashMap<>();
+            // Ä«ï¿½ï¿½Æ® ï¿½Ï°ï¿½
+            for (int j = 0; j < yIndex; j++) {
+                // ï¿½ï¿½ï¿½ï¿½
+                int t = arr[i][j];
+                // ï¿½Ì¹ï¿½ ï¿½Ö´Ù¸ï¿½?
+                if (t != 0) {
+                    if (map.containsKey(t)) {
+                        map.replace(t, map.get(t) + 1);
+                    } else {
+                        map.put(t, 1);
+                    }
+                }
+            }
 
-			ArrayList<Node> n = new ArrayList<Node>();
-			for (int s : map.keySet()) {
-				int key = s;
-				int value = map.get(s);
+            ArrayList<Node> n = new ArrayList<Node>();
+            for (int s : map.keySet()) {
+                int key = s;
+                int value = map.get(s);
 
-				Node ne = new Node(key, value);
-				n.add(ne);
-			}
+                Node ne = new Node(key, value);
+                n.add(ne);
+            }
 
-			Collections.sort(n);
-			for (Node sorted : n) {
-				// 100À» ³Ñ¾î°¡¸é ¹ö¸°´Ù
-				if (index >= 100) {
-					break;
-				}
-				temp[i][index++] = sorted.x;
-				temp[i][index++] = sorted.y;
+            Collections.sort(n);
+            for (Node sorted : n) {
+                // 100ï¿½ï¿½ ï¿½Ñ¾î°¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+                if (index >= 100) {
+                    break;
+                }
+                temp[i][index++] = sorted.x;
+                temp[i][index++] = sorted.y;
 
-				//System.out.println("Index : " + index);
-				// ÃÖ´ë max Ã¼Å©
-				if (index > max) {
-					max = index;
-				}
-			}
-		}
+                //System.out.println("Index : " + index);
+                // ï¿½Ö´ï¿½ max Ã¼Å©
+                if (index > max) {
+                    max = index;
+                }
+            }
+        }
 
-		yIndex = max;
+        yIndex = max;
 
-		return temp;
-	}
+        return temp;
+    }
 
-	static int[][] CSolve(int[][] arr) {
-		//print(arr);
+    static int[][] CSolve(int[][] arr) {
+        //print(arr);
 
-		int[][] temp = new int[100][100];
-		int max = 0;
-		for (int i = 0; i < yIndex; i++) {
-			//System.out.println("row : " + i);
-			// »õ·Î¿î arr index
-			int index = 0;
+        int[][] temp = new int[100][100];
+        int max = 0;
+        for (int i = 0; i < yIndex; i++) {
+            //System.out.println("row : " + i);
+            // ï¿½ï¿½ï¿½Î¿ï¿½ arr index
+            int index = 0;
 
-			Map<Integer, Integer> map = new HashMap<>();
-			// Ä«¿îÆ® ÇÏ°í
-			for (int j = 0; j < xIndex; j++) {
-				// ¼ýÀÚ
-				int t = arr[j][i];
-				// ÀÌ¹Ì ÀÖ´Ù¸é?
-				if (t != 0) {
-					if (map.containsKey(t)) {
-						map.replace(t, map.get(t) + 1);
-					} else {
-						map.put(t, 1);
-					}
-				}
-			}
+            Map<Integer, Integer> map = new HashMap<>();
+            // Ä«ï¿½ï¿½Æ® ï¿½Ï°ï¿½
+            for (int j = 0; j < xIndex; j++) {
+                // ï¿½ï¿½ï¿½ï¿½
+                int t = arr[j][i];
+                // ï¿½Ì¹ï¿½ ï¿½Ö´Ù¸ï¿½?
+                if (t != 0) {
+                    if (map.containsKey(t)) {
+                        map.replace(t, map.get(t) + 1);
+                    } else {
+                        map.put(t, 1);
+                    }
+                }
+            }
 
-			ArrayList<Node> n = new ArrayList<Node>();
-			for (int s : map.keySet()) {
-				int key = s;
-				int value = map.get(s);
+            ArrayList<Node> n = new ArrayList<Node>();
+            for (int s : map.keySet()) {
+                int key = s;
+                int value = map.get(s);
 
-				Node ne = new Node(key, value);
-				n.add(ne);
-			}
+                Node ne = new Node(key, value);
+                n.add(ne);
+            }
 
-			Collections.sort(n);
-			for (Node sorted : n) {
-				// 100À» ³Ñ¾î°¡¸é ¹ö¸°´Ù
-				if (index >= 100) {
-					break;
-				}
-				temp[index++][i] = sorted.x;
-				temp[index++][i] = sorted.y;
+            Collections.sort(n);
+            for (Node sorted : n) {
+                // 100ï¿½ï¿½ ï¿½Ñ¾î°¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+                if (index >= 100) {
+                    break;
+                }
+                temp[index++][i] = sorted.x;
+                temp[index++][i] = sorted.y;
 
-				//System.out.println("Index : " + index);
-				// ÃÖ´ë max Ã¼Å©
-				if (index > max) {
-					max = index;
-				}
-			}
-		}
+                //System.out.println("Index : " + index);
+                // ï¿½Ö´ï¿½ max Ã¼Å©
+                if (index > max) {
+                    max = index;
+                }
+            }
+        }
 
-		xIndex = max;
+        xIndex = max;
 
-		return temp;
-	}
+        return temp;
+    }
 
-	static boolean safe(int x, int y) {
-		return (x >= 0) && (y >= 0) && (x < 100) && (y < 100);
-	}
+    static boolean safe(int x, int y) {
+        return (x >= 0) && (y >= 0) && (x < 100) && (y < 100);
+    }
 
-	static class Node implements Comparable<Node> {
-		// ¼ýÀÚ
-		public int x;
-		// Ä«¿îÆ®
-		public int y;
+    static class Node implements Comparable<Node> {
+        // ï¿½ï¿½ï¿½ï¿½
+        public int x;
+        // Ä«ï¿½ï¿½Æ®
+        public int y;
 
-		Node(int x, int y) {
-			this.x = x;
-			this.y = y;
-		}
+        Node(int x, int y) {
+            this.x = x;
+            this.y = y;
+        }
 
-		@Override
-		public int compareTo(Node o) {
-			if (this.y > o.y) {
-				return 1;
-			} else if (this.y == o.y) {
-				if (this.x > o.x) {
-					return 1;
-				} else {
-					return -1;
-				}
-			} else {
-				return -1;
-			}
+        @Override
+        public int compareTo(Node o) {
+            if (this.y > o.y) {
+                return 1;
+            } else if (this.y == o.y) {
+                if (this.x > o.x) {
+                    return 1;
+                } else {
+                    return -1;
+                }
+            } else {
+                return -1;
+            }
 
-		}
-	}
+        }
+    }
 
-	static int[][] left(int[][] arr) {
+    static int[][] left(int[][] arr) {
 
-		int[][] temp = new int[100][100];
+        int[][] temp = new int[100][100];
 
-		for (int i = 0; i < arr[0].length; i++) {
-			for (int j = 0; j < arr.length; j++) {
-				temp[i][j] = arr[j][(arr[0].length - 1) - i];
-			}
-		}
+        for (int i = 0; i < arr[0].length; i++) {
+            for (int j = 0; j < arr.length; j++) {
+                temp[i][j] = arr[j][(arr[0].length - 1) - i];
+            }
+        }
 
-		return temp;
-	}
+        return temp;
+    }
 
-	static int[][] right(int[][] arr) {
+    static int[][] right(int[][] arr) {
 
-		int[][] temp = new int[100][100];
+        int[][] temp = new int[100][100];
 
-		for (int i = 0; i < arr[0].length; i++) {
-			for (int j = 0; j < arr.length; j++) {
-				temp[i][j] = arr[(arr.length - 1) - j][i];
-			}
-		}
+        for (int i = 0; i < arr[0].length; i++) {
+            for (int j = 0; j < arr.length; j++) {
+                temp[i][j] = arr[(arr.length - 1) - j][i];
+            }
+        }
 
-		return temp;
-	}
+        return temp;
+    }
 
-	static void print(int[][] arr) {
+    static void print(int[][] arr) {
 
-		for (int i = 0; i < xIndex; i++) {
-			for (int j = 0; j < yIndex; j++) {
-				System.out.print(arr[i][j] + " ");
-			}
-			System.out.println();
-		}
-		System.out.println("--------------");
-	}
+        for (int i = 0; i < xIndex; i++) {
+            for (int j = 0; j < yIndex; j++) {
+                System.out.print(arr[i][j] + " ");
+            }
+            System.out.println();
+        }
+        System.out.println("--------------");
+    }
 }

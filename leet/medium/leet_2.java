@@ -4,73 +4,73 @@
 /**
  * Definition for singly-linked list.
  * public class ListNode {
- *     int val;
- *     ListNode next;
- *     ListNode(int x) { val = x; }
+ * int val;
+ * ListNode next;
+ * ListNode(int x) { val = x; }
  * }
  */
 class Solution {
     public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
-        
-      	ListNode result = null;
-		ListNode pointer = null;
 
-		boolean flag = false;
-		boolean first = true;
+        ListNode result = null;
+        ListNode pointer = null;
 
-		while (l1 != null || l2 != null) {
+        boolean flag = false;
+        boolean first = true;
 
-			int value1 = 0;
-			int value2 = 0;
-			if (l1 != null) {
-				value1 = l1.val;
-			}
+        while (l1 != null || l2 != null) {
 
-			if (l2 != null) {
-				value2 = l2.val;
-			}
+            int value1 = 0;
+            int value2 = 0;
+            if (l1 != null) {
+                value1 = l1.val;
+            }
 
-			int temp = 0;
-			if (flag) {
-				temp = (value1 + value2) + 1;
-			} else {
-				temp = (value1 + value2);
-			}
+            if (l2 != null) {
+                value2 = l2.val;
+            }
 
-			if (temp >= 10) {
-				// ÇÑÀÚ¸®¼ö·Î º¯°æ
-				temp = temp - 10;
-				// ´ÙÀ½ÀÚ¸® 1 ´õÇØ¾ß µÈ´Ù.
-				flag = true;
-			} else {
-				// ´ÙÀ½ÀÚ¸® 1 ´õÇÏÁö ¾Ê¾Æµµ µÈ´Ù.
-				flag = false;
-			}
+            int temp = 0;
+            if (flag) {
+                temp = (value1 + value2) + 1;
+            } else {
+                temp = (value1 + value2);
+            }
 
-			if (first) {
-				ListNode n = new ListNode(temp);
-				result = n;
-				pointer = n;
-				first = false;
-			} else {
-				ListNode n = new ListNode(temp);
-				pointer.next = n;
-				pointer = pointer.next;
-			}
+            if (temp >= 10) {
+                // ï¿½ï¿½ï¿½Ú¸ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+                temp = temp - 10;
+                // ï¿½ï¿½ï¿½ï¿½ï¿½Ú¸ï¿½ 1 ï¿½ï¿½ï¿½Ø¾ï¿½ ï¿½È´ï¿½.
+                flag = true;
+            } else {
+                // ï¿½ï¿½ï¿½ï¿½ï¿½Ú¸ï¿½ 1 ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê¾Æµï¿½ ï¿½È´ï¿½.
+                flag = false;
+            }
 
-			if (l1 != null) {
-				l1 = l1.next;
-			}
+            if (first) {
+                ListNode n = new ListNode(temp);
+                result = n;
+                pointer = n;
+                first = false;
+            } else {
+                ListNode n = new ListNode(temp);
+                pointer.next = n;
+                pointer = pointer.next;
+            }
 
-			if (l2 != null) {
-				l2 = l2.next;
-			}
-		}
-        
-        if(flag){
+            if (l1 != null) {
+                l1 = l1.next;
+            }
+
+            if (l2 != null) {
+                l2 = l2.next;
+            }
+        }
+
+        if (flag) {
             pointer.next = new ListNode(1);
         }
-        
+
         return result;
     }
 }

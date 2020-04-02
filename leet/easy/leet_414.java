@@ -1,37 +1,37 @@
 class Solution {
     public int thirdMax(int[] nums) {
         Stack<Integer> ss = new Stack<>();
-		for (int n : nums) {
-			if (ss.isEmpty()) {
-				ss.push(n);
-			} else {
-				Stack<Integer> temp = new Stack<>();
-				// ÃßÃâ (nÀÌ ÀÛÀ»¶§±îÁö)
-				while (!ss.isEmpty() && ss.peek() <= n) {
-					// ³Ö¾îµÐ´Ù
-					if (ss.peek() != n) {
-						temp.push(ss.pop());
-					}else {
-						ss.pop();
-					}
-				}
-				// ³Ö´Â´Ù
-				if (ss.size() < 3) {
-					ss.push(n);
-				}
-				// ´Ù½Ã ½×±â (size =3)
-				if (ss.size() < 3) {
-					while (!temp.isEmpty() && ss.size() != 3) {
-						ss.push(temp.pop());
-					}
-				}
-			}
-		}
-		
-		if(ss.size()==3) {
-			return ss.peek();
-		}else {
-			return ss.get(0);
-		}
+        for (int n : nums) {
+            if (ss.isEmpty()) {
+                ss.push(n);
+            } else {
+                Stack<Integer> temp = new Stack<>();
+                // ï¿½ï¿½ï¿½ï¿½ (nï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½)
+                while (!ss.isEmpty() && ss.peek() <= n) {
+                    // ï¿½Ö¾ï¿½Ð´ï¿½
+                    if (ss.peek() != n) {
+                        temp.push(ss.pop());
+                    } else {
+                        ss.pop();
+                    }
+                }
+                // ï¿½Ö´Â´ï¿½
+                if (ss.size() < 3) {
+                    ss.push(n);
+                }
+                // ï¿½Ù½ï¿½ ï¿½×±ï¿½ (size =3)
+                if (ss.size() < 3) {
+                    while (!temp.isEmpty() && ss.size() != 3) {
+                        ss.push(temp.pop());
+                    }
+                }
+            }
+        }
+
+        if (ss.size() == 3) {
+            return ss.peek();
+        } else {
+            return ss.get(0);
+        }
     }
 }

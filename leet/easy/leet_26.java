@@ -5,30 +5,29 @@ import java.util.Map;
 
 public class leet_26 {
 
-	public static void main(String[] args) {
-		int[] nums = {};
-		if(nums==null) {
-			//return 0;
-		}
-		
-		int len = 1;
+    public static void main(String[] args) {
+        int[] nums = {};
+        if (nums == null) {
+            //return 0;
+        }
 
-		int base = nums[0];
-		int baseIndex = 1;
+        int len = 1;
+
+        int base = nums[0];
+        int baseIndex = 1;
 
 
-		
-		for (int i = 1; i < nums.length; i++) {
-			// µ¿ÀÏÇÏ¸é?
-			if (nums[i] == base) {
-				continue;
-			} else {
-				nums[baseIndex++] = nums[i];
-				base = nums[i];
-				len++;
-			}
-		}
+        for (int i = 1; i < nums.length; i++) {
+            // ï¿½ï¿½ï¿½ï¿½ï¿½Ï¸ï¿½?
+            if (nums[i] == base) {
+                continue;
+            } else {
+                nums[baseIndex++] = nums[i];
+                base = nums[i];
+                len++;
+            }
+        }
 
-		System.out.println(len);
-	}
+        System.out.println(len);
+    }
 }

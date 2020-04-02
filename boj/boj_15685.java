@@ -8,149 +8,149 @@ import java.util.List;
 import java.util.StringTokenizer;
 
 public class N {
-	static int[][] arr = new int[101][101];
-	static int N;
-	static int[] dx = { 0, -1, 0, 1 };
-	static int[] dy = { 1, 0, -1, 0 };
+    static int[][] arr = new int[101][101];
+    static int N;
+    static int[] dx = {0, -1, 0, 1};
+    static int[] dy = {1, 0, -1, 0};
 
-	public static void main(String[] args) throws NumberFormatException, IOException {
-		BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
-		StringTokenizer st;
+    public static void main(String[] args) throws NumberFormatException, IOException {
+        BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st;
 
-		N = Integer.parseInt(bf.readLine());
+        N = Integer.parseInt(bf.readLine());
 
-		for (int i = 0; i < N; i++) {
-			String s = bf.readLine();
-			st = new StringTokenizer(s);
+        for (int i = 0; i < N; i++) {
+            String s = bf.readLine();
+            st = new StringTokenizer(s);
 
-			int x = Integer.parseInt(st.nextToken());
-			int y = Integer.parseInt(st.nextToken());
-			int d = Integer.parseInt(st.nextToken());
-			int g = Integer.parseInt(st.nextToken());
+            int x = Integer.parseInt(st.nextToken());
+            int y = Integer.parseInt(st.nextToken());
+            int d = Integer.parseInt(st.nextToken());
+            int g = Integer.parseInt(st.nextToken());
 
-			List<Node> n = new ArrayList<Node>();
-			// ½ÃÀÛÁ¡ add
-			n.add(new Node(y, x));
-			arr[y][x] = 1;
+            List<Node> n = new ArrayList<Node>();
+            // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ add
+            n.add(new Node(y, x));
+            arr[y][x] = 1;
 
-			switch (d) {
-			// ¿À
-			case 0:
-				n.add(new Node(y, x + 1));
-				arr[y][x + 1] = 1;
-				// µå·¡°ï, Çö¼¼´ë, ¸¶Áö¸· ¼¼´ë
-				solve(n, 0, g);
-				break;
-			// À§
-			case 1:
-				n.add(new Node(y - 1, x));
-				arr[y - 1][x] = 1;
-				solve(n, 0, g);
-				break;
-			// ¿Þ
-			case 2:
-				n.add(new Node(y, x - 1));
-				arr[y][x - 1] = 1;
-				solve(n, 0, g);
-				break;
-			// ¾Æ
-			case 3:
-				n.add(new Node(y + 1, x));
-				arr[y + 1][x] = 1;
-				solve(n, 0, g);
-				break;
-			}
+            switch (d) {
+                // ï¿½ï¿½
+                case 0:
+                    n.add(new Node(y, x + 1));
+                    arr[y][x + 1] = 1;
+                    // ï¿½å·¡ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+                    solve(n, 0, g);
+                    break;
+                // ï¿½ï¿½
+                case 1:
+                    n.add(new Node(y - 1, x));
+                    arr[y - 1][x] = 1;
+                    solve(n, 0, g);
+                    break;
+                // ï¿½ï¿½
+                case 2:
+                    n.add(new Node(y, x - 1));
+                    arr[y][x - 1] = 1;
+                    solve(n, 0, g);
+                    break;
+                // ï¿½ï¿½
+                case 3:
+                    n.add(new Node(y + 1, x));
+                    arr[y + 1][x] = 1;
+                    solve(n, 0, g);
+                    break;
+            }
 
-		}
+        }
 
-		// µå·¡°ï Ä¿ºê ²ÀÁöÁ¡ check
-		System.out.println(check());
-	}
+        // ï¿½å·¡ï¿½ï¿½ Ä¿ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ check
+        System.out.println(check());
+    }
 
-	public static int check() {
-		int temp = 0;
+    public static int check() {
+        int temp = 0;
 
-		for (int i = 0; i < 100; i++) {
-			for (int j = 0; j < 100; j++) {
-				if (arr[i][j] == 1) {
-					if (arr[i][j + 1] + arr[i + 1][j] + arr[i + 1][j + 1] == 3) {
-						temp++;
-					}
-				}
-			}
-		}
+        for (int i = 0; i < 100; i++) {
+            for (int j = 0; j < 100; j++) {
+                if (arr[i][j] == 1) {
+                    if (arr[i][j + 1] + arr[i + 1][j] + arr[i + 1][j + 1] == 3) {
+                        temp++;
+                    }
+                }
+            }
+        }
 
-		return temp;
-	}
+        return temp;
+    }
 
-	public static void solve(List<Node> old, int cur, int end) {
+    public static void solve(List<Node> old, int cur, int end) {
 
-		// Çö½ÃÁ¡ µå·¡°ïÄ¿ºê Ãâ·Â
-		//System.out.println("Çö¼¼´ë : " + cur);
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½å·¡ï¿½ï¿½Ä¿ï¿½ï¿½ ï¿½ï¿½ï¿½
+        //System.out.println("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ : " + cur);
 
-		// ¼¼´ë end
-		if (cur == end) {
-			return;
-		}
+        // ï¿½ï¿½ï¿½ï¿½ end
+        if (cur == end) {
+            return;
+        }
 
-		// ½Å¼¼´ë
-		List<Node> ne = new ArrayList<Node>();
-		// ±âÁ¸ ¼¼´ëÀÇ ²¿¸®
-		Node oTail = old.get(old.size() - 1);
-		//System.out.println("±âÁ¸ ¼¼´ë ²¿¸® : " + oTail.x + " , " + oTail.y);
-		// ½Å¼¼´ëÀÇ ¸Ó¸®
-		ne.add(oTail);
+        // ï¿½Å¼ï¿½ï¿½ï¿½
+        List<Node> ne = new ArrayList<Node>();
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+        Node oTail = old.get(old.size() - 1);
+        //System.out.println("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ : " + oTail.x + " , " + oTail.y);
+        // ï¿½Å¼ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ó¸ï¿½
+        ne.add(oTail);
 
-		for (int i = old.size() - 2; i >= 0; i--) {
-			// ÀÌÀü Node
-			Node oBefore = old.get(i);
-			//System.out.println("±âÁ¸ ¼¼´ë ÀÌÀü Node : " + oBefore.x + " , " + oBefore.y);
-			
-			// ¾î´À¹æÇâÀÎÁö check
-			for (int j = 0; j < 4; j++) {
-				if (oTail.x + dx[j] == oBefore.x && oTail.y + dy[j] == oBefore.y) {
-					// ½Å¼¼´ëÀÇ ²¿¸®
-					Node nTail = ne.get(ne.size() - 1);
+        for (int i = old.size() - 2; i >= 0; i--) {
+            // ï¿½ï¿½ï¿½ï¿½ Node
+            Node oBefore = old.get(i);
+            //System.out.println("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Node : " + oBefore.x + " , " + oBefore.y);
 
-					int x = nTail.x + dx[(j + 3) % 4];
-					int y = nTail.y + dy[(j + 3) % 4];
+            // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ check
+            for (int j = 0; j < 4; j++) {
+                if (oTail.x + dx[j] == oBefore.x && oTail.y + dy[j] == oBefore.y) {
+                    // ï¿½Å¼ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+                    Node nTail = ne.get(ne.size() - 1);
 
-					//System.out.println("Ãß°¡)  x : " + x + " , " + "y : " + y);
-					ne.add(new Node(x, y));
-					arr[x][y] = 1;
-					//printArr(arr);
-				}
-			}
+                    int x = nTail.x + dx[(j + 3) % 4];
+                    int y = nTail.y + dy[(j + 3) % 4];
 
-			// ²¿¸® Node °»½Å
-			oTail = oBefore;
-		}
-		
-		ne.remove(0);
-		// ¼¼´ë ÇÕÄ¡±â
-		old.addAll(ne);
-		// ´ÙÀ½¼¼´ë·Î ÁøÀÔ
-		solve(old, cur + 1, end);
+                    //System.out.println("ï¿½ß°ï¿½)  x : " + x + " , " + "y : " + y);
+                    ne.add(new Node(x, y));
+                    arr[x][y] = 1;
+                    //printArr(arr);
+                }
+            }
 
-	}
+            // ï¿½ï¿½ï¿½ï¿½ Node ï¿½ï¿½ï¿½ï¿½
+            oTail = oBefore;
+        }
 
-	public static class Node {
-		int x;
-		int y;
+        ne.remove(0);
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½
+        old.addAll(ne);
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+        solve(old, cur + 1, end);
 
-		Node(int x, int y) {
-			this.x = x;
-			this.y = y;
-		}
-	}
+    }
 
-	public static void printArr(int[][] arr) {
-		for (int i = 0; i < 10; i++) {
-			for (int j = 0; j < 10; j++) {
-				System.out.print(arr[i][j] + " ");
-			}
-			System.out.println();
-		}
-		System.out.println("-----------------------");
-	}
+    public static class Node {
+        int x;
+        int y;
+
+        Node(int x, int y) {
+            this.x = x;
+            this.y = y;
+        }
+    }
+
+    public static void printArr(int[][] arr) {
+        for (int i = 0; i < 10; i++) {
+            for (int j = 0; j < 10; j++) {
+                System.out.print(arr[i][j] + " ");
+            }
+            System.out.println();
+        }
+        System.out.println("-----------------------");
+    }
 }

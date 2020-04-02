@@ -5,16 +5,16 @@ import java.util.Map;
 
 public class leet_217 {
 
-	public static void main(String[] args) {
-		int[] nums = { 1, 2, 3, 1 };
-		Map<Integer, Integer> hash = new HashMap<>();
+    public static void main(String[] args) {
+        int[] nums = {1, 2, 3, 1};
+        Map<Integer, Integer> hash = new HashMap<>();
 
-		for (int n : nums) {
-			if (hash.containsKey(n)) {
+        for (int n : nums) {
+            if (hash.containsKey(n)) {
 
-			} else {
-				hash.put(n, 1);
-			}
-		}
-	}
+            } else {
+                hash.put(n, 1);
+            }
+        }
+    }
 }

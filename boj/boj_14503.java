@@ -6,86 +6,86 @@ import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
 public class N1 {
-	// 0, 1, 2, 3
-	static int[] dx = { -1, 0, 1, 0 };
-	static int[] dy = { 0, 1, 0, -1 };
-	static int result;
-	static int N = 0;
-	static int M = 0;
+    // 0, 1, 2, 3
+    static int[] dx = {-1, 0, 1, 0};
+    static int[] dy = {0, 1, 0, -1};
+    static int result;
+    static int N = 0;
+    static int M = 0;
 
-	static int[][] arr;
+    static int[][] arr;
 
-	// 0: Ã»¼Ò¾ÈÇÑ°÷, 1 : º® , 2 : Ã»¼ÒÇÑ°÷
-	public static void main(String[] args) throws IOException {
-		BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
-		StringTokenizer st;
+    // 0: Ã»ï¿½Ò¾ï¿½ï¿½Ñ°ï¿½, 1 : ï¿½ï¿½ , 2 : Ã»ï¿½ï¿½ï¿½Ñ°ï¿½
+    public static void main(String[] args) throws IOException {
+        BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st;
 
-		st = new StringTokenizer(bf.readLine());
-		N = Integer.parseInt(st.nextToken());
-		M = Integer.parseInt(st.nextToken());
-		arr = new int[N][M];
+        st = new StringTokenizer(bf.readLine());
+        N = Integer.parseInt(st.nextToken());
+        M = Integer.parseInt(st.nextToken());
+        arr = new int[N][M];
 
-		st = new StringTokenizer(bf.readLine());
-		int r = Integer.parseInt(st.nextToken());
-		int c = Integer.parseInt(st.nextToken());
-		int d = Integer.parseInt(st.nextToken());
+        st = new StringTokenizer(bf.readLine());
+        int r = Integer.parseInt(st.nextToken());
+        int c = Integer.parseInt(st.nextToken());
+        int d = Integer.parseInt(st.nextToken());
 
-		for (int i = 0; i < N; i++) {
-			st = new StringTokenizer(bf.readLine());
-			for (int j = 0; j < M; j++) {
-				arr[i][j] = Integer.parseInt(st.nextToken());
-			}
-		}
+        for (int i = 0; i < N; i++) {
+            st = new StringTokenizer(bf.readLine());
+            for (int j = 0; j < M; j++) {
+                arr[i][j] = Integer.parseInt(st.nextToken());
+            }
+        }
 
-		solve(r, c, d);
-		System.out.println(result);
-		bf.close();
-	}
+        solve(r, c, d);
+        System.out.println(result);
+        bf.close();
+    }
 
-	static void solve(int r, int c, int d) {
-		// System.out.println("r : " + r + " , c : " + c + " , d : " + d);
-		// ÇöÀçÀ§Ä¡ Ã»¼Ò
-		if (arr[r][c] == 0) {
-			arr[r][c] = 2;
-			result++;
-		}
+    static void solve(int r, int c, int d) {
+        // System.out.println("r : " + r + " , c : " + c + " , d : " + d);
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¡ Ã»ï¿½ï¿½
+        if (arr[r][c] == 0) {
+            arr[r][c] = 2;
+            result++;
+        }
 
-		// printArr();
+        // printArr();
 
-		for (int i = 3; i >= 0; i--) {
+        for (int i = 3; i >= 0; i--) {
 
-			// Ã»¼ÒÇÏÁö ¾ÊÀº °ø°£ÀÌ ÀÖ´Ù¸é?
-			if (safe(r + dx[(d + i) % 4], c + dy[(d + i) % 4]) && arr[r + dx[(d + i) % 4]][c + dy[(d + i) % 4]] == 0) {
-				// ±×¹æÇâÀ¸·Î È¸ÀüÇÏ°í, ÇÑÄ­ÀüÁø
-				solve(r + dx[(d + i) % 4], c + dy[(d + i) % 4], (d + i) % 4);
-				break;
-			}
+            // Ã»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´Ù¸ï¿½?
+            if (safe(r + dx[(d + i) % 4], c + dy[(d + i) % 4]) && arr[r + dx[(d + i) % 4]][c + dy[(d + i) % 4]] == 0) {
+                // ï¿½×¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ È¸ï¿½ï¿½ï¿½Ï°ï¿½, ï¿½ï¿½Ä­ï¿½ï¿½ï¿½ï¿½
+                solve(r + dx[(d + i) % 4], c + dy[(d + i) % 4], (d + i) % 4);
+                break;
+            }
 
-			// ³×¹æÇâ ¸ðµÎ Ã»¼Ò or º®ÀÎ°æ¿ì
-			if (i == 0) {
-				if (safe(r + dx[(d + 2) % 4], c + dy[(d + 2) % 4])
-						&& arr[r + dx[(d + 2) % 4]][c + dy[(d + 2) % 4]] == 2) {
-					// System.out.println("ÈÄÁø###################");
-					solve(r + dx[(d + 2) % 4], c + dy[(d + 2) % 4], d);
-					break;
-				} else {
-					break;
-				}
-			}
-		}
-	}
+            // ï¿½×¹ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ Ã»ï¿½ï¿½ or ï¿½ï¿½ï¿½Î°ï¿½ï¿½
+            if (i == 0) {
+                if (safe(r + dx[(d + 2) % 4], c + dy[(d + 2) % 4])
+                        && arr[r + dx[(d + 2) % 4]][c + dy[(d + 2) % 4]] == 2) {
+                    // System.out.println("ï¿½ï¿½ï¿½ï¿½###################");
+                    solve(r + dx[(d + 2) % 4], c + dy[(d + 2) % 4], d);
+                    break;
+                } else {
+                    break;
+                }
+            }
+        }
+    }
 
-	static boolean safe(int x, int y) {
-		return (x >= 0) && (y >= 0) && (x < N) && (y < M);
-	}
+    static boolean safe(int x, int y) {
+        return (x >= 0) && (y >= 0) && (x < N) && (y < M);
+    }
 
-	static void printArr() {
-		for (int i = 0; i < N; i++) {
-			for (int j = 0; j < M; j++) {
-				System.out.print(arr[i][j] + " ");
-			}
-			System.out.println();
-		}
-		System.out.println();
-	}
+    static void printArr() {
+        for (int i = 0; i < N; i++) {
+            for (int j = 0; j < M; j++) {
+                System.out.print(arr[i][j] + " ");
+            }
+            System.out.println();
+        }
+        System.out.println();
+    }
 }

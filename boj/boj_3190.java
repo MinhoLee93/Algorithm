@@ -6,168 +6,168 @@ import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
 public class N {
-	static int N;
-	static int K;
+    static int N;
+    static int K;
 
-	static int[][] arr;
-	static int[] dx = { 1, 0, -1, 0 };
-	static int[] dy = { 0, 1, 0, -1 };
+    static int[][] arr;
+    static int[] dx = {1, 0, -1, 0};
+    static int[] dy = {0, 1, 0, -1};
 
-	static Node[] snake;
-	static int head = 0;
-	static int tail = 0;
-	// 0: ¾Æ·¡ , 1: ¿À¸¥ÂÊ, 2: À§ÂÊ, 3: ¿ÞÂÊ
-	static int move;
+    static Node[] snake;
+    static int head = 0;
+    static int tail = 0;
+    // 0: ï¿½Æ·ï¿½ , 1: ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½, 2: ï¿½ï¿½ï¿½ï¿½, 3: ï¿½ï¿½ï¿½ï¿½
+    static int move;
 
-	// È¸Àü
-	static int L;
-	static Time[] time;
-	static int tIndex = 0;
+    // È¸ï¿½ï¿½
+    static int L;
+    static Time[] time;
+    static int tIndex = 0;
 
-	static int result = 0;
+    static int result = 0;
 
-	public static void main(String[] args) throws IOException {
-		BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
-		StringTokenizer st;
-		N = Integer.parseInt(bf.readLine());
-		arr = new int[N][N];
-		K = Integer.parseInt(bf.readLine());
+    public static void main(String[] args) throws IOException {
+        BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st;
+        N = Integer.parseInt(bf.readLine());
+        arr = new int[N][N];
+        K = Integer.parseInt(bf.readLine());
 
-		snake = new Node[N * N];
-		for (int i = 0; i < K; i++) {
-			st = new StringTokenizer(bf.readLine());
-			int x = Integer.parseInt(st.nextToken());
-			int y = Integer.parseInt(st.nextToken());
+        snake = new Node[N * N];
+        for (int i = 0; i < K; i++) {
+            st = new StringTokenizer(bf.readLine());
+            int x = Integer.parseInt(st.nextToken());
+            int y = Integer.parseInt(st.nextToken());
 
-			// »ç°ú À§Ä¡ ±â·Ï
-			arr[x - 1][y - 1] = 7;
-		}
+            // ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ ï¿½ï¿½ï¿½
+            arr[x - 1][y - 1] = 7;
+        }
 
-		L = Integer.parseInt(bf.readLine());
-		time = new Time[L];
+        L = Integer.parseInt(bf.readLine());
+        time = new Time[L];
 
-		for (int i = 0; i < L; i++) {
-			st = new StringTokenizer(bf.readLine());
-			int x = Integer.parseInt(st.nextToken());
-			String y = st.nextToken();
+        for (int i = 0; i < L; i++) {
+            st = new StringTokenizer(bf.readLine());
+            int x = Integer.parseInt(st.nextToken());
+            String y = st.nextToken();
 
-			// È¸Àü¹æÇâ º¯È¯ ±â·Ï
-			time[i] = new Time(x, y);
-		}
+            // È¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¯ ï¿½ï¿½ï¿½
+            time[i] = new Time(x, y);
+        }
 
-		// Ã¹ À§Ä¡
-		snake[0] = new Node(0, 0);
-		arr[0][0] = 1;
-		// Ã³À½ ¹æÇâÀº ¿À¸¥ÂÊ
-		move = 1;
-		solve(result);
-		System.out.println(result+1);
+        // Ã¹ ï¿½ï¿½Ä¡
+        snake[0] = new Node(0, 0);
+        arr[0][0] = 1;
+        // Ã³ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+        move = 1;
+        solve(result);
+        System.out.println(result + 1);
 
-		bf.close();
-	}
+        bf.close();
+    }
 
-	static void solve(int t) {
-		//System.out.println("solve : " + t);
+    static void solve(int t) {
+        //System.out.println("solve : " + t);
 
-		// È¸Àü¹æÇâÀ» ¹Ù²ã¾ß µÉ ½Ã°£ÀÌ¸é (½Ã°£ index È®ÀÎ)
-		if (tIndex < time.length && time[tIndex].x == t) {
-			move(time[tIndex].y);
-			// time Index update
-			tIndex++;
-		}
+        // È¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ù²ï¿½ï¿½ ï¿½ï¿½ ï¿½Ã°ï¿½ï¿½Ì¸ï¿½ (ï¿½Ã°ï¿½ index È®ï¿½ï¿½)
+        if (tIndex < time.length && time[tIndex].x == t) {
+            move(time[tIndex].y);
+            // time Index update
+            tIndex++;
+        }
 
-		Node he = snake[head];
-		// º®ÀÌ ¾Æ´Ï°í && ÀÚ±âÀÚ½ÅÀÌ ¾Æ´Ò°æ¿ì
-		if (safe(he.x + dx[move], he.y + dy[move]) && arr[he.x + dx[move]][he.y + dy[move]] != 1) {
+        Node he = snake[head];
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½Æ´Ï°ï¿½ && ï¿½Ú±ï¿½ï¿½Ú½ï¿½ï¿½ï¿½ ï¿½Æ´Ò°ï¿½ï¿½
+        if (safe(he.x + dx[move], he.y + dy[move]) && arr[he.x + dx[move]][he.y + dy[move]] != 1) {
 
-			// »ç°úÀÏ°æ¿ì
-			if (arr[he.x + dx[move]][he.y + dy[move]] == 7) {
+            // ï¿½ï¿½ï¿½ï¿½Ï°ï¿½ï¿½
+            if (arr[he.x + dx[move]][he.y + dy[move]] == 7) {
 
-			} else {
-				// ²¿¸®»ç°ú Áö¿ì±â
-				Node ta = snake[tail];
-				arr[ta.x][ta.y] = 0;
-				tail++;
-			}
+            } else {
+                // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½
+                Node ta = snake[tail];
+                arr[ta.x][ta.y] = 0;
+                tail++;
+            }
 
-			// ¸Ó¸®¸¦ ´ÙÀ½Ä­¿¡ À§Ä¡
-			arr[he.x + dx[move]][he.y + dy[move]] = 1;
-			snake[++head] = new Node(he.x + dx[move], he.y + dy[move]);
+            // ï¿½Ó¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ä­ï¿½ï¿½ ï¿½ï¿½Ä¡
+            arr[he.x + dx[move]][he.y + dy[move]] = 1;
+            snake[++head] = new Node(he.x + dx[move], he.y + dy[move]);
 
-			// ´ÙÀ½À¸·Î ÁøÇà
-			solve(++result);
-		} else {
-			return;
-		}
-	}
+            // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+            solve(++result);
+        } else {
+            return;
+        }
+    }
 
-	// ¸Ó¸® È¸Àü
-	static void move(String s) {
+    // ï¿½Ó¸ï¿½ È¸ï¿½ï¿½
+    static void move(String s) {
 
-		if (s.equals("L")) {
-			switch (move) {
-			case 0:
-				move = 1;
-				break;
-			case 1:
-				move = 2;
-				break;
-			case 2:
-				move = 3;
-				break;
-			case 3:
-				move = 0;
-				break;
-			}
-		} else if (s.equals("D")) {
-			switch (move) {
-			case 0:
-				move = 3;
-				break;
-			case 1:
-				move = 0;
-				break;
-			case 2:
-				move = 1;
-				break;
-			case 3:
-				move = 2;
-				break;
-			}
-		}
-	}
+        if (s.equals("L")) {
+            switch (move) {
+                case 0:
+                    move = 1;
+                    break;
+                case 1:
+                    move = 2;
+                    break;
+                case 2:
+                    move = 3;
+                    break;
+                case 3:
+                    move = 0;
+                    break;
+            }
+        } else if (s.equals("D")) {
+            switch (move) {
+                case 0:
+                    move = 3;
+                    break;
+                case 1:
+                    move = 0;
+                    break;
+                case 2:
+                    move = 1;
+                    break;
+                case 3:
+                    move = 2;
+                    break;
+            }
+        }
+    }
 
-	static boolean safe(int x, int y) {
-		return (x >= 0) && (y >= 0) && (x < N) && (y < N);
-	}
+    static boolean safe(int x, int y) {
+        return (x >= 0) && (y >= 0) && (x < N) && (y < N);
+    }
 
-	static void print() {
-		for (int i = 0; i < N; i++) {
-			for (int j = 0; j < N; j++) {
-				System.out.print(arr[i][j] + " ");
-			}
-			System.out.println();
-		}
-		System.out.println("----------");
-	}
+    static void print() {
+        for (int i = 0; i < N; i++) {
+            for (int j = 0; j < N; j++) {
+                System.out.print(arr[i][j] + " ");
+            }
+            System.out.println();
+        }
+        System.out.println("----------");
+    }
 
-	static class Time {
-		int x;
-		String y;
+    static class Time {
+        int x;
+        String y;
 
-		Time(int x, String y) {
-			this.x = x;
-			this.y = y;
-		}
-	}
+        Time(int x, String y) {
+            this.x = x;
+            this.y = y;
+        }
+    }
 
-	static class Node {
-		int x;
-		int y;
+    static class Node {
+        int x;
+        int y;
 
-		Node(int x, int y) {
-			this.x = x;
-			this.y = y;
-		}
-	}
+        Node(int x, int y) {
+            this.x = x;
+            this.y = y;
+        }
+    }
 }
