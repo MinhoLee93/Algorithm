@@ -1,57 +1,31 @@
-class Solution {
-    public List<List<String>> groupAnagrams(String[] strs) {
-        List<List<String>> result = new ArrayList<>();
-        int[] check = new int[strs.length];
-        for (int i = 0; i < strs.length; i++) {
-            // already added
-            if (check[i] == 1) {
-                continue;
-            }
+package com.example.demo.challenge;
 
-            List<String> set = new ArrayList<>();
-            set.add(strs[i]);
-            check[i]++;
-            for (int j = i + 1; j < strs.length; j++) {
-                if(check[j]==1){
-                    continue;
-                }
+import org.junit.Test;
 
-                //System.out.println(strs[i] + " <=> " + strs[j]);
-                // is anagram?
-                if (checkAnagrams(strs[i], strs[j])) {
-                    // then add
-                    //System.out.println(">>>>>");
-                    set.add(strs[j]);
-                    check[j]++;
-                }
-            }
-            result.add(set);
-        }
-        return result;
+import java.awt.print.Pageable;
+import java.util.*;
+
+public class Ch_6 {
+
+    @Test
+    public void test() {
+        String[] strs = {"eat", "tea", "tan", "ate", "nat", "bat"};
+        groupAnagrams(strs);
     }
 
-    private boolean checkAnagrams(String a, String b) {
-        if (a.length() != b.length()) {
-            return false;
-        }
-
-        for (int i = 0; i < a.length(); i++) {
-            if (b.length() == 0) {
-                return false;
+    public List<List<String>> groupAnagrams(String[] strs) {
+        Map<String, List<String>> hash = new HashMap<>();
+        for (String s : strs) {
+            int[] scores = new int[26];
+            for(char c : s.toCharArray()){
+                scores[c - 'a']++;
             }
-            String temp = a.substring(i, i+1);
-            if(b.indexOf(temp)==-1){
-                return false;
-            }
-            b = b.replaceFirst(temp, "");
+            String key = Arrays.toString(scores);
+            System.out.println(Arrays.toString(scores));
+            hash.putIfAbsent(key, new ArrayList<>());
+            hash.get(key).add(s);
         }
 
-        System.out.println(a + "," + b);
-
-        if (b.equals("")) {
-            return true;
-        }
-
-        return false;
+        return new ArrayList(hash.values());
     }
 }
